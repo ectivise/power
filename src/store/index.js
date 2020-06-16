@@ -5,8 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    frontend_token: "ectivisecloudDBAuthCode:b84846daf467cede0ee462d04bcd0ade",
-    backend_api: "http://dev1.ectivisecloud.com:8081/api/",
+    frontend_token: process.env.VUE_APP_FRONTEND_TOKEN,
+    backend_api: process.env.VUE_APP_BACKEND_API,
     ontlist: [],
     oltlist: [
       {
