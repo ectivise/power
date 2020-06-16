@@ -12,16 +12,8 @@
     >
       <template v-slot:expanded-item="{headers,item}">
         <td :colspan="headers.length">
-          More info about {{ item.name }}
-          <v-sparkline
-            :gradient="['#F44336', '#FFEB3B', '#4CAF50']"
-            gradientDirection="top"
-            :labels="todaylabels"
-            :value="todayvalue"
-            line-width="0.5"
-            padding="16"
-            label-size="4"
-          ></v-sparkline>
+          Optical RX:  {{ item.optical.rx }}<br>
+          Optical TX:  {{ item.optical.tx }}<br>
         </td>
       </template>
       <template v-slot:item.cost="{ item }">
