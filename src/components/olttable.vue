@@ -27,6 +27,9 @@
       <template v-slot:item.cost="{ item }">
         {{item.device.power.power * 0.01}}
       </template>
+      <template v-slot:item.device.redundant="{ item }">
+      <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -168,6 +171,15 @@ export default {
         this.raspberrypis.push(this.editedItem);
       }
       this.close();
+    },
+
+    getColor(status) {
+      switch (status) {
+        case "Active":
+          return "green";
+        case "Standby":
+          return "orange";
+      }
     }
   }
 };

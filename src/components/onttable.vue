@@ -14,7 +14,7 @@
         <td :colspan="headers.length">
           <v-container>
             <v-row>
-              <v-col cols="4">
+              <v-col cols="6" md="4">
                 <p>
                   Optical RX: {{item.optical.rx}}<br />
                   Optical TX: {{item.optical.tx}}<br />
@@ -26,7 +26,7 @@
                 </p>
                 
               </v-col>
-              <v-col cols="8">
+              <v-col cols="6" md="8">
                   <line-chart :data="chartdata"></line-chart>
               </v-col>
             </v-row>
