@@ -14,7 +14,7 @@
         <td :colspan="headers.length">
           <v-container>
             <v-row>
-              <v-col>
+              <v-col cols="4">
                 <p>
                   Optical RX: {{item.optical.rx}}<br />
                   Optical TX: {{item.optical.tx}}<br />
@@ -22,10 +22,12 @@
                   last Up Time: {{item.device.lastUpTime}}<br />
                   SN: {{item.device.SN}}<br />
                   Model: {{item.device.model}}<br />
+                  <v-divider></v-divider>
                 </p>
+                
               </v-col>
-              <v-col>
-                  graph
+              <v-col cols="8">
+                  <line-chart :data="chartdata"></line-chart>
               </v-col>
             </v-row>
           </v-container>
@@ -102,6 +104,12 @@
 export default {
   data() {
     return {
+      chartdata:{
+        '15/6' : 3,
+        '16/6' : 3,
+        '17/6' : 3.5,
+        '18/6' : 3,
+      },
       ontexpanded: [],
       dialog: false,
       ontsearch: "",
