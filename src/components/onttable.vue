@@ -27,7 +27,7 @@
                 
               </v-col>
               <v-col cols="6" md="8">
-                  <line-chart :data="chartdata"></line-chart>
+                  <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart>
               </v-col>
             </v-row>
           </v-container>
