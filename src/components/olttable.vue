@@ -24,6 +24,9 @@
           ></v-sparkline>
         </td>
       </template>
+      <template v-slot:item.cost="{ item }">
+        {{item.device.power.power * 0.01}}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>

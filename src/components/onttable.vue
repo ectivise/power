@@ -12,16 +12,23 @@
     >
       <template v-slot:expanded-item="{headers,item}">
         <td :colspan="headers.length">
-          More info about {{ item.name }}
-          <v-sparkline
-            :gradient="['#F44336', '#FFEB3B', '#4CAF50']"
-            gradientDirection="top"
-            :labels="todaylabels"
-            :value="todayvalue"
-            line-width="0.5"
-            padding="16"
-            label-size="4"
-          ></v-sparkline>
+          <v-container>
+            <v-row>
+              <v-col>
+                <p>
+                  Optical RX: {{item.optical.rx}}<br />
+                  Optical TX: {{item.optical.tx}}<br />
+                  last Down Time: {{item.device.lastDownTime}}<br />
+                  last Up Time: {{item.device.lastUpTime}}<br />
+                  SN: {{item.device.SN}}<br />
+                  Model: {{item.device.model}}<br />
+                </p>
+              </v-col>
+              <v-col>
+                  graph
+              </v-col>
+            </v-row>
+          </v-container>
         </td>
       </template>
       <template v-slot:item.week="{ item }">{{item.device.power.power * 604800}}</template>
@@ -29,7 +36,7 @@
       <template v-slot:item.year="{ item }">{{item.device.power.power * 31536000}}</template>
       <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+        <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
       </template>
       <template v-slot:top>
@@ -86,10 +93,6 @@
             </v-card>
           </v-dialog>
         </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
       </template>
     </v-data-table>
   </v-card>
@@ -151,9 +154,9 @@ export default {
     },
 
     deleteItem(item) {
-      const index = this.raspberrypis.indexOf(item);
+      const index = this.ontlist.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.raspberrypis.splice(index, 1);
+        this.ontlist.splice(index, 1);
     },
 
     close() {
