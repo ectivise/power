@@ -1,26 +1,22 @@
 <template>
-  <v-card>
+  <div>
+    <v-card>
     <v-data-table
-      :headers="oltheaders"
-      :items="oltlist"
-      :search="oltsearch"
-      :expanded.sync="oltexpanded"
+      :headers="headers"
+      :items="oltportontlist"
+      :search="search"
+      :expanded.sync="expanded"
       single-expand
-      item-key="device.name"
+      item-key="portId"
       class="elevation-1"
       show-expand
+      :loading="loading"
     >
       <template v-slot:expanded-item="{headers,item}">
-        <td :colspan="headers.length">
-          Optical RX:  {{ item.optical.rx }}<br>
-          Optical TX:  {{ item.optical.tx }}<br>
-        </td>
-      </template>
-      <template v-slot:item.cost="{ item }">
-        {{item.device.power.power * 0.01}}
-      </template>
-      <template v-slot:item.device.redundant="{ item }">
-      <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
+        <tr :colspan="headers.length" v-for="(ont, index) in item.ONTs"
+          :key="index">
+            {{ont}}
+        </tr>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
@@ -28,10 +24,10 @@
       </template>
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title class="font-weight-bold">OLT Devices</v-toolbar-title>
+          <v-toolbar-title class="font-weight-bold">ONTs</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-text-field
-            v-model="oltsearch"
+            v-model="search"
             append-icon="mdi-magnify"
             label="Search"
             single-line
@@ -87,48 +83,56 @@
       </template>
     </v-data-table>
   </v-card>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      oltexpanded: [],
+      expanded: [],
       dialog: false,
-      oltsearch: "",
-      oltheaders: [
+      search: "",
+      headers: [
         {
-          text: "Device",
+          text: "Port",
           align: "start",
-          value: "device.name"
+          value: "portId"
         },
-        { text: "Status", value: "device.redundant" },
-        { text: "Today(kw)", value: "device.power.power" },
-        { text: "Cost($)", value: "cost" },
         { text: "Action", value: "actions", sortable: false },
         { text: "", value: "data-table-expand" }
       ],
       editedIndex: -1,
       editedItem: {},
-      defaultItem: {}
+      defaultItem: {},
+      loading:true,
     };
   },
   computed: {
       formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    oltlist() {
-      return this.$store.getters.oltlist;
+      oltportontlist() {
+          if(this.$store.getters.oltlist == undefined){
+              return [];
+          }else{
+              return this.$store.getters.oltlist[0].ports;
+          }
     },
   },
   watch: {
     dialog(val) {
       val || this.close();
+    },
+    oltportontlist(value){
+        if(value == undefined){
+            this.loading = true;
+        }else{
+            this.loading = false;
+        }
     }
   },
-
   methods: {
-
     editItem(item) {
       this.editedIndex = this.raspberrypis.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -171,4 +175,5 @@ export default {
 </script>
 
 <style>
+
 </style>

@@ -8,50 +8,14 @@ export default new Vuex.Store({
     frontend_token: process.env.VUE_APP_FRONTEND_TOKEN,
     backend_api: process.env.VUE_APP_BACKEND_API,
     ontlist: [],
-    oltlist: [
-      {
-        optical: {
-          rx: 0,
-          tx: 0,
-        },
-        device: {
-          power: {
-            power: 0,
-            voltage: 0,
-            current: 0,
-          },
-          name: "LG-M01FCC-OLT01",
-          IP_Address: "",
-          category: "gpon",
-          lastdowncause: "",
-          redundant: "Active",
-          _id: "5ee5e0b6b8b1e359fc09928f",
-        },
-      },
-      {
-        optical: {
-          rx: 0,
-          tx: 0,
-        },
-        device: {
-          power: {
-            power: 0,
-            voltage: 0,
-            current: 0,
-          },
-          name: "LG-M01FCC-OLT02",
-          IP_Address: "",
-          category: "gpon",
-          lastdowncause: "",
-          redundant: "Standby",
-          _id: "5ee5e0b6b8b1e359fc09928f",
-        },
-      },
-    ],
+    oltlist: [],
   },
   mutations: {
     get_ontlist(state, get_ontresult) {
       state.ontlist = get_ontresult;
+    },
+    get_oltlist(state, get_oltresult) {
+      state.oltlist = get_oltresult;
     },
   },
   actions: {
@@ -78,14 +42,35 @@ export default new Vuex.Store({
         .then((result) => context.commit("get_ontlist", JSON.parse(result)))
         .catch((error) => console.log("error", error));
     },
+
+    async get_oltlist(context){
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      myHeaders.append("Cookie", "connect.sid=s%3AZ9KsmIEdraTtPw3Om_j_cfw76Y01kqe4.uANu%2F%2F0eRUB%2FNixL41JyVzcS5YY%2FDudEOhBK7ZgnziU");
+
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("token", this.state.frontend_token);
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+      };
+
+      await fetch( this.state.backend_api + "devices/get_olt", requestOptions)
+        .then(response => response.text())
+        .then(result => context.commit("get_oltlist", JSON.parse(result)))
+        .catch(error => console.log('error', error));
+    }
   },
   getters: {
     ontlist(state) {
       return state.ontlist.data;
     },
     oltlist(state){
-      return state.oltlist;
-    }
+      return state.oltlist.data;
+    },
   },
   modules: {},
 });
