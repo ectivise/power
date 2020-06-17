@@ -74,6 +74,23 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <v-data-iterator hide-default-footer :items="top5">
+        <template v-slot:header>
+        <v-toolbar
+          class="mb-2"
+          color="green darken-5"
+          dark
+          flat
+        >
+          <v-toolbar-title>Top 5 Power ONTs Devices</v-toolbar-title>
+        </v-toolbar>
+      </template>
+
+      </v-data-iterator>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

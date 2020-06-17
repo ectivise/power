@@ -8,7 +8,8 @@
             {{oltlist[0].device.name}}
           </v-card-title>
           <v-card-text>
-            <v-chip :color="getColor(oltlist[0].device.redundant)" dark>{{oltlist[0].device.redundant }}</v-chip>
+            Power: {{oltlist[0].device.power.power}}kw
+            <v-chip :color="getColor(oltlist[0].device.redundant)" class="mx-2" dark>{{oltlist[0].device.redundant }}</v-chip>
           </v-card-text>
         </v-card>
       </v-col>
@@ -19,7 +20,8 @@
             {{oltlist[1].device.name}}
           </v-card-title>
           <v-card-text>
-            <v-chip :color="getColor(oltlist[1].device.redundant)" dark>{{oltlist[1].device.redundant }}</v-chip>
+            Power: {{oltlist[1].device.power.power}}kw
+            <v-chip :color="getColor(oltlist[1].device.redundant)" class="mx-2" dark>{{oltlist[1].device.redundant }}</v-chip>
           </v-card-text>
         </v-card>
       </v-col>

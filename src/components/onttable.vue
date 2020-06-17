@@ -40,13 +40,13 @@
       <template v-slot:item.month="{ item }">{{item.device.power.power * 2419200}}</template>
       <template v-slot:item.year="{ item }">{{item.device.power.power * 31536000}}</template>
       <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template>
-      <template v-slot:item.actions="{ item }">
+      <!-- <template v-slot:item.actions="{ item }">
         <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template>
+      </template> -->
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title class="font-weight-bold">ONT Devices</v-toolbar-title>
+          <v-toolbar-title class="font-weight-bold">ONT/MDU Devices</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="ontsearch"
@@ -59,7 +59,7 @@
             dense
             class="px-6 mx-6"
           ></v-text-field>
-          <v-dialog v-model="dialog" max-width="500px">
+          <!-- <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-1" v-bind="attrs" v-on="on">New Item</v-btn>
             </template>
@@ -96,7 +96,7 @@
                 <v-btn color="blue darken-1" text @click="save">Save</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
         </v-toolbar>
       </template>
     </v-data-table>
@@ -114,7 +114,7 @@ export default {
         '18/6' : 3,
       },
       ontexpanded: [],
-      dialog: false,
+      // dialog: false,
       ontsearch: "",
       ontheaders: [
         {
@@ -128,7 +128,7 @@ export default {
         { text: "Month(kw)", value: "month" },
         { text: "Year(kw)", value: "year" },
         { text: "Cost($)", value: "cost" },
-        { text: "Action", value: "actions", sortable: false },
+        // { text: "Action", value: "actions", sortable: false },
         { text: "", value: "data-table-expand" }
       ],
       editedIndex: -1,
