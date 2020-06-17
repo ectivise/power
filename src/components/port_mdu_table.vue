@@ -3,7 +3,7 @@
     <v-card>
     <v-data-table
       :headers="headers"
-      :items="oltportontlist"
+      :items="oltportlist"
       :search="search"
       :expanded.sync="expanded"
       single-expand
@@ -12,10 +12,11 @@
       show-expand
       :loading="loading"
     >
+      <template v-slot:item.status="{ item }">
+        <v-chip color="red" dark v-if="item.MDUs.length == 0">no MDU</v-chip>
+        <v-chip color="green" dark v-else>{{item.MDUs.length}} MDUs</v-chip>
+      </template>
       <template v-slot:expanded-item="{headers,item}">
-        <p v-if="item.MDUs.length == 0">
-              no MDU in port {{item.portId}}
-        </p>
         <tr :colspan="headers.length" v-for="(mdu, index) in item.MDUs"
           :key="index">
             {{mdu}}
@@ -102,6 +103,7 @@ export default {
           align: "start",
           value: "portId"
         },
+        { text: "", value: "status", sortable: false },
         { text: "Action", value: "actions", sortable: false },
         { text: "", value: "data-table-expand" }
       ],
@@ -115,7 +117,7 @@ export default {
       formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-      oltportontlist() {
+      oltportlist() {
           if(this.$store.getters.oltlist == undefined){
               return [];
           }else{
@@ -127,7 +129,7 @@ export default {
     dialog(val) {
       val || this.close();
     },
-    oltportontlist(value){
+    oltportlist(value){
         if(value == undefined){
             this.loading = true;
         }else{
@@ -165,14 +167,6 @@ export default {
       this.close();
     },
 
-    getColor(status) {
-      switch (status) {
-        case "Active":
-          return "green";
-        case "Standby":
-          return "orange";
-      }
-    }
   }
 };
 </script>

@@ -13,13 +13,13 @@
       :loading="loading"
     >
       <template v-slot:item.status="{ item }">
-        <v-chip color="red" dark v-if="item.ONTs.length == 0">no ONT</v-chip>
-        <v-chip color="green" dark v-else>{{item.ONTs.length}} ONTs</v-chip>
+        <v-chip color="red" dark v-if="item.ONUs.length == 0">no ONU</v-chip>
+        <v-chip color="green" dark v-else>{{item.ONUs.length}} ONUs</v-chip>
       </template>
       <template v-slot:expanded-item="{headers,item}">
-        <tr :colspan="headers.length" v-for="(ont, index) in item.ONTs"
+        <tr :colspan="headers.length" v-for="(onu, index) in item.ONUs"
           :key="index">
-            {{ont}}
+            {{onu}}
         </tr>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -28,7 +28,7 @@
       </template>
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title class="font-weight-bold">ONTs</v-toolbar-title>
+          <v-toolbar-title class="font-weight-bold">ONUs</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
