@@ -12,9 +12,6 @@
       <v-col>
         <port_mdu_table/>
       </v-col>
-      <v-col>
-        <port_onu_table/>
-      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -23,14 +20,14 @@
 import olttable from "../components/olttable.vue";
 import port_ont_table from "../components/port_ont_table.vue";
 import port_mdu_table from "../components/port_mdu_table.vue";
-import port_onu_table from "../components/port_onu_table.vue";
+// import port_onu_table from "../components/port_onu_table.vue";
 
 export default {
   components: {
     olttable,
     port_ont_table,
     port_mdu_table,
-    port_onu_table,
+    // port_onu_table,
   },
   created() {
     this.get_ontlist();

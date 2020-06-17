@@ -17,10 +17,17 @@
         <v-chip color="green" dark v-else>{{item.ONTs.length}} ONTs</v-chip>
       </template>
       <template v-slot:expanded-item="{headers,item}">
-        <tr :colspan="headers.length" v-for="(ont, index) in item.ONTs"
-          :key="index">
-            {{ont}}
-        </tr>
+        <td :colspan="headers.length">
+          <v-simple-table>
+              <template v-slot:default>
+                <tbody>
+                  <tr v-for="(ont, index) in item.ONTs" :key="index">
+                    <td>{{ ont }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+        </td>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>

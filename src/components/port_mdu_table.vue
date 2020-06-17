@@ -17,10 +17,17 @@
         <v-chip color="green" dark v-else>{{item.MDUs.length}} MDUs</v-chip>
       </template>
       <template v-slot:expanded-item="{headers,item}">
-        <tr :colspan="headers.length" v-for="(mdu, index) in item.MDUs"
-          :key="index">
-            {{mdu}}
-        </tr>
+        <td :colspan="headers.length">
+          <v-simple-table>
+              <template v-slot:default>
+                <tbody>
+                  <tr v-for="(mdu, index) in item.MDUs" :key="index">
+                    <td>{{ mdu }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+        </td>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
