@@ -10,6 +10,9 @@
       class="elevation-1"
       show-expand
     >
+      <template v-slot:item.port="{item}">
+        {{getportont(item.device.name)}}
+      </template>
       <template v-slot:expanded-item="{headers,item}">
         <td :colspan="headers.length">
           <v-container>
@@ -119,6 +122,7 @@ export default {
           align: "start",
           value: "device.name"
         },
+        { text: "Port", value: "port" },
         { text: "Today(kw)", value: "device.power.power" },
         { text: "Week(kw)", value: "week" },
         { text: "Month(kw)", value: "month" },
@@ -138,6 +142,13 @@ export default {
     },
     ontlist() {
       return this.$store.getters.ontlist;
+    },
+    oltlist() {
+      if (this.$store.getters.oltlist == undefined) {
+        return [];
+      } else {
+        return this.$store.getters.oltlist;
+      }
     }
   },
   watch: {
@@ -182,6 +193,16 @@ export default {
         this.raspberrypis.push(this.editedItem);
       }
       this.close();
+    },
+
+    getportont(ontname){
+      for(let i = 0; i<this.oltlist[0].ports.length; i++){
+        for(let j = 0 ; j<this.oltlist[0].ports[i].ONTs.length;j++){
+          if(this.oltlist[0].ports[i].ONTs[j] == ontname){
+            return this.oltlist[0].ports[i].portId
+          }
+        }
+      }
     }
   }
 };

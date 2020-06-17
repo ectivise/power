@@ -12,7 +12,7 @@
                 <v-list-item-title>Home Dashboard</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link to="/about">
+            <v-list-item link to="/gpon">
               <v-list-item-action>
                 <v-icon>mdi-router-wireless-settings</v-icon>
               </v-list-item-action>
@@ -20,22 +20,22 @@
                 <v-list-item-title>GPON</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link to="/olt">
+            <!-- <v-list-item link to="/olt">
               <v-list-item-action>
                 <v-icon>mdi-router-wireless</v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>OLT</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
-            <v-list-item link to="/ont">
+            </v-list-item> -->
+            <!-- <v-list-item link to="/ont">
               <v-list-item-action>
                 <v-icon>mdi-router-network</v-icon>
               </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title>ONT/MDU</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
           </v-list>
         </v-navigation-drawer>
 
