@@ -4,7 +4,7 @@
       <v-col cols="6" md="4" offset-md="2">
         <v-card>
           <v-card-title>
-            <v-icon left>mdi-router-wireless</v-icon>
+            <v-icon left>mdi-router-network</v-icon>
             {{oltlist[0].device.name}}
           </v-card-title>
           <v-card-text align="left" class="ma-2 title">
@@ -19,7 +19,7 @@
       <v-col cols="6" md="4">
         <v-card>
             <v-card-title>
-            <v-icon left>mdi-router-wireless</v-icon>
+            <v-icon left>mdi-router-network</v-icon>
             {{oltlist[1].device.name}}
           </v-card-title>
           <v-card-text align="left" class="ma-2 title">

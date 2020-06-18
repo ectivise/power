@@ -105,7 +105,7 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title>Top 5 Power</v-card-title>
+          <v-card-title>Top 5 Power <v-icon>mdi-lightning-bolt</v-icon> </v-card-title>
           <v-card-text>
             <v-simple-table dense>
           <template v-slot:default>
@@ -130,7 +130,18 @@
           <v-btn color="green" outlined to="/gpon">View More</v-btn>
           </v-card-actions>
         </v-card>
-        
+      </v-col>
+      <v-col>
+        <v-card>
+          <v-card-title><v-icon left>mdi-alert</v-icon>Alarms</v-card-title>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title>Events</v-card-title>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
