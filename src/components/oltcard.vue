@@ -7,9 +7,12 @@
             <v-icon left>mdi-router-wireless</v-icon>
             {{oltlist[0].device.name}}
           </v-card-title>
-          <v-card-text>
-            Power: {{oltlist[0].device.power.power}}kw
-            <v-chip :color="getColor(oltlist[0].device.redundant)" class="mx-2" dark>{{oltlist[0].device.redundant }}</v-chip>
+          <v-card-text align="left" class="ma-2 title">
+            IP: {{oltlist[0].device.IP_Address}}<br>
+            Power: {{oltlist[0].device.power.power}}kw<br>
+            Optical RX: {{oltlist[0].optical.rx}}<br>
+            Optical TX: {{oltlist[0].optical.tx}}<br>
+            <v-chip :color="getColor(oltlist[0].device.redundant)" class="ma-2" dark>{{oltlist[0].device.redundant }}</v-chip>
           </v-card-text>
         </v-card>
       </v-col>
@@ -19,9 +22,12 @@
             <v-icon left>mdi-router-wireless</v-icon>
             {{oltlist[1].device.name}}
           </v-card-title>
-          <v-card-text>
-            Power: {{oltlist[1].device.power.power}}kw
-            <v-chip :color="getColor(oltlist[1].device.redundant)" class="mx-2" dark>{{oltlist[1].device.redundant }}</v-chip>
+          <v-card-text align="left" class="ma-2 title">
+            IP: {{oltlist[1].device.IP_Address}}<br>
+            Power: {{oltlist[1].device.power.power}}kw<br>
+            Optical RX: {{oltlist[1].optical.rx}}<br>
+            Optical TX: {{oltlist[1].optical.tx}}<br>
+            <v-chip :color="getColor(oltlist[1].device.redundant)" class="ma-2" dark>{{oltlist[1].device.redundant }}</v-chip>
           </v-card-text>
         </v-card>
       </v-col>

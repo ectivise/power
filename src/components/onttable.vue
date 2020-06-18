@@ -13,6 +13,9 @@
       <template v-slot:item.port="{item}">
         {{getportont(item.device.name)}}
       </template>
+      <template v-slot:item.device.redundant="{item}">
+        <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
+      </template>
       <template v-slot:expanded-item="{headers,item}">
         <td :colspan="headers.length">
           <v-container>
@@ -126,7 +129,7 @@ export default {
         { text: "Today(kw)", value: "device.power.power" },
         { text: "Week(kw)", value: "week" },
         { text: "Month(kw)", value: "month" },
-        { text: "Year(kw)", value: "year" },
+        { text: "Status", value: "device.redundant" },
         { text: "Cost($)", value: "cost" },
         // { text: "Action", value: "actions", sortable: false },
         { text: "", value: "data-table-expand" }
@@ -203,7 +206,15 @@ export default {
           }
         }
       }
-    }
+    },
+    getColor(status) {
+      switch (status) {
+        case "Active":
+          return "green";
+        case "Standby":
+          return "orange";
+      }
+    },
   }
 };
 </script>

@@ -18,14 +18,14 @@ Vue.use(VueRouter)
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/GPON.vue')
   },
-  // {
-  //   path: '/olt',
-  //   name: 'OLT',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/OLT.vue')
-  // },
+  {
+    path: '/analysis',
+    name: 'Analysis',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Analysis.vue')
+  },
   // {
   //   path: '/ont',
   //   name: 'ONT',

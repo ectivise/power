@@ -20,14 +20,14 @@
                 <v-list-item-title>GPON</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <!-- <v-list-item link to="/olt">
+            <v-list-item link to="/analysis">
               <v-list-item-action>
-                <v-icon>mdi-router-wireless</v-icon>
+                <v-icon>mdi-database-search</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>OLT</v-list-item-title>
+                <v-list-item-title>Analysis</v-list-item-title>
               </v-list-item-content>
-            </v-list-item> -->
+            </v-list-item>
             <!-- <v-list-item link to="/ont">
               <v-list-item-action>
                 <v-icon>mdi-router-network</v-icon>
