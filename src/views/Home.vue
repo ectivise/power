@@ -10,11 +10,18 @@
             elevation="12"
             max-width="calc(100% - 10px)"
           >
-            <v-sparkline :labels="todaylabels" :value="todayvalue" color="white" line-width="2" padding="16" label-size="12"></v-sparkline>
+            <v-sparkline
+              :labels="todaylabels"
+              :value="todayvalue"
+              color="white"
+              line-width="2"
+              padding="16"
+              label-size="12"
+            ></v-sparkline>
           </v-sheet>
           <v-card-title>Today</v-card-title>
           <v-card-text class="pt-0">
-            <div class="title font-weight-light mb-2 grey--text" >Accumulated Power, 15-6-2020 12am</div>
+            <div class="title font-weight-light mb-2 grey--text">Accumulated Power, 15-6-2020 12am</div>
             <div class="display-1 font-weight-light grey--text">20kw</div>
           </v-card-text>
         </v-card>
@@ -28,7 +35,14 @@
             elevation="12"
             max-width="calc(100% - 10px)"
           >
-            <v-sparkline :labels="weeklabels" :value="weekvalue" color="white" line-width="2" padding="16" label-size="12"></v-sparkline>
+            <v-sparkline
+              :labels="weeklabels"
+              :value="weekvalue"
+              color="white"
+              line-width="2"
+              padding="16"
+              label-size="12"
+            ></v-sparkline>
           </v-sheet>
           <v-card-title>Week</v-card-title>
           <v-card-text class="pt-0">
@@ -46,7 +60,14 @@
             elevation="12"
             max-width="calc(100% - 10px)"
           >
-            <v-sparkline :labels="monthlabels" :value="monthvalue" color="white" line-width="2" padding="16" label-size="12"></v-sparkline>
+            <v-sparkline
+              :labels="monthlabels"
+              :value="monthvalue"
+              color="white"
+              line-width="2"
+              padding="16"
+              label-size="12"
+            ></v-sparkline>
           </v-sheet>
           <v-card-title>Month</v-card-title>
           <v-card-text class="pt-0">
@@ -64,7 +85,14 @@
             elevation="12"
             max-width="calc(100% - 10px)"
           >
-            <v-sparkline :labels="yearlabels" :value="yearvalue" color="white" line-width="2" padding="16" label-size="12"></v-sparkline>
+            <v-sparkline
+              :labels="yearlabels"
+              :value="yearvalue"
+              color="white"
+              line-width="2"
+              padding="16"
+              label-size="12"
+            ></v-sparkline>
           </v-sheet>
           <v-card-title>Year</v-card-title>
           <v-card-text class="pt-0">
@@ -76,19 +104,24 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-data-iterator hide-default-footer :items="top5">
-        <template v-slot:header>
-        <v-toolbar
-          class="mb-2"
-          color="green darken-5"
-          dark
-          flat
-        >
-          <v-toolbar-title>Top 5 Power ONTs Devices</v-toolbar-title>
-        </v-toolbar>
-      </template>
-
-      </v-data-iterator>
+        <v-simple-table dense>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-center">No.</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Power</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item,index) in top5ont" :key="index">
+                <td>{{ top5[index] }}</td>
+                <td>{{ item.device.name }}</td>
+                <td>{{ item.device.power.power }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </v-col>
     </v-row>
   </v-container>
@@ -110,8 +143,46 @@ export default {
       yearvalue: [200, 675, 410, 390, 310, 460],
       gradient:['#f72047', '#ffd200', '#1feaea'],
       gradientDirection: 'top',
+      top5:[1,2,3,4,5]
     }
   },
   components: {},
+  created() {
+    this.get_ontlist();
+  },
+  methods:{
+    get_ontlist() {
+      this.$store.dispatch("get_ontlist");
+    },
+  },
+  computed:{
+    top5ont(){
+      if(this.$store.getters.ontlist == undefined){
+        return []
+      } else{
+        let top5array = [];
+        var list = [...this.$store.getters.ontlist];
+        var maxindex = 0
+        var maxpower = 0
+        let count=0
+
+        while(count < 5){
+          for(let i=0; i<list.length; i++){
+            if(list[i].device.power.power >= maxpower){
+              maxpower = list[i].device.power.power;
+              maxindex = i;
+            }
+            }
+          top5array.push(list[maxindex]);
+          list.splice(maxindex,1);
+          count++;
+        }
+        
+
+        return top5array;
+      }
+      
+    }
+  }
 }
 </script>

@@ -125,11 +125,11 @@ export default {
           align: "start",
           value: "device.name"
         },
+        { text: "Status", value: "device.redundant" },
         { text: "Port", value: "port" },
         { text: "Today(kw)", value: "device.power.power" },
         { text: "Week(kw)", value: "week" },
         { text: "Month(kw)", value: "month" },
-        { text: "Status", value: "device.redundant" },
         { text: "Cost($)", value: "cost" },
         // { text: "Action", value: "actions", sortable: false },
         { text: "", value: "data-table-expand" }
