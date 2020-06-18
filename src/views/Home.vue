@@ -104,7 +104,10 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-simple-table dense>
+        <v-card>
+          <v-card-title>Top 5 Power</v-card-title>
+          <v-card-text>
+            <v-simple-table dense>
           <template v-slot:default>
             <thead>
               <tr>
@@ -115,13 +118,19 @@
             </thead>
             <tbody>
               <tr v-for="(item,index) in top5ont" :key="index">
-                <td>{{ top5[index] }}</td>
+                <td>{{ index+1 }}</td>
                 <td>{{ item.device.name }}</td>
                 <td>{{ item.device.power.power }}</td>
               </tr>
             </tbody>
           </template>
         </v-simple-table>
+          </v-card-text>
+        <v-card-actions>
+          <v-btn color="green" outlined to="/gpon">View More</v-btn>
+          </v-card-actions>
+        </v-card>
+        
       </v-col>
     </v-row>
   </v-container>
@@ -143,7 +152,6 @@ export default {
       yearvalue: [200, 675, 410, 390, 310, 460],
       gradient:['#f72047', '#ffd200', '#1feaea'],
       gradientDirection: 'top',
-      top5:[1,2,3,4,5]
     }
   },
   components: {},

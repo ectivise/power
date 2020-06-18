@@ -10,6 +10,9 @@
       class="elevation-1"
       show-expand
     >
+      <template v-slot:item.device.type="{item}" >
+        <span class="text-uppercase">{{item.device.type}}</span>
+      </template>
       <template v-slot:item.port="{item}">
         {{getportont(item.device.name)}}
       </template>
@@ -126,6 +129,9 @@ export default {
           value: "device.name"
         },
         { text: "Status", value: "device.redundant" },
+        { text: "type", value: "device.type" },
+        { text: "Optical RX", value: "optical.rx" },
+        { text: "Optical TX", value: "optical.tx" },
         { text: "Port", value: "port" },
         { text: "Today(kw)", value: "device.power.power" },
         { text: "Week(kw)", value: "week" },
