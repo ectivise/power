@@ -43,7 +43,7 @@
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
           <v-toolbar-title>Power Moniter</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn v-if="login" @click="logout()">Log Out</v-btn>
+          <v-btn v-if="login" @click="logout()" dark color="primary">Log Out</v-btn>
         </v-app-bar>
 
         <v-content>

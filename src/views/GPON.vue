@@ -21,6 +21,7 @@
 <script>
 import oltcard from "../components/oltcard.vue";
 import onttable from "../components/onttable.vue";
+
 export default {
   name:"gpon",
   components:{
