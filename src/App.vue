@@ -35,7 +35,7 @@
               <v-list-item-content>
                 <v-list-item-title>ONT/MDU</v-list-item-title>
               </v-list-item-content>
-            </v-list-item> -->
+            </v-list-item>-->
           </v-list>
         </v-navigation-drawer>
 
@@ -49,66 +49,78 @@
         <v-content>
           <router-view></router-view>
         </v-content>
-        <v-footer color="green" app>
-        </v-footer>
+        <v-snackbar v-model="snackbar.showing" :timeout="3000" color="primary">
+          {{snackbar.text}}
+          <template v-slot:action="{attrs}">
+            <v-btn text @click="snackbar.showing = false" v-bind="attrs">close</v-btn>
+          </template>
+        </v-snackbar>
+        <v-footer color="green" app></v-footer>
       </v-app>
     </v-app>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data: () => ({
-    drawer: null,
+    drawer: null
   }),
-  computed:{
-    login(){
+  computed: {
+    login() {
       return this.$store.state.login;
     },
-    disabled(){
-      if(this.login == true){
-        return false
+    disabled() {
+      if (this.login == true) {
+        return false;
       } else {
-        return true
+        return true;
       }
     },
+    ...mapState(['snackbar'])
   },
   watch: {
     $route(to) {
-      if((to.name == "Home" || to.name == "GPON" || to.name == "Analysis") && this.login == false){
+      if (
+        (to.name == "Home" || to.name == "GPON" || to.name == "Analysis") &&
+        this.login == false
+      ) {
         let url = "/login";
         this.$router.push(url);
       }
     }
   },
-  mounted(){
+  mounted() {
     this.syncsession();
     this.tologin();
-    
   },
-  methods:{
-    tologin(){
+  methods: {
+    tologin() {
       let url = "/login";
       this.$router.push(url);
     },
-    async logout(){
+    async logout() {
       // await this.$store.dispatch("logout",this.$store.getters.currentuser.mobile);
-      this.$store.commit('logout');
+      this.$store.commit("logout");
       this.loginstatus();
       this.tologin();
     },
-    loginstatus(){
-        var obj = {
-          login: this.$store.getters.login,
-        }
-        sessionStorage.setItem('data', JSON.stringify(obj))
+    loginstatus() {
+      var obj = {
+        login: this.$store.getters.login
+      };
+      sessionStorage.setItem("data", JSON.stringify(obj));
     },
-    syncsession(){
-        this.$store.commit('synclogin',JSON.parse(sessionStorage.getItem('data')).login)
-    },
-  },
-  
-}
+    syncsession() {
+      this.$store.commit(
+        "synclogin",
+        JSON.parse(sessionStorage.getItem("data")).login
+      );
+    }
+  }
+};
 </script>>
 
 

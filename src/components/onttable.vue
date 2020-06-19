@@ -120,6 +120,7 @@
 
 <script>
 export default {
+  name:"onttable",
   data() {
     return {
       chartdata: {

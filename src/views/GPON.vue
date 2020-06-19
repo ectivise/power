@@ -31,11 +31,6 @@ export default {
 </script>
 
 <style  scoped>
-@media screen and (max-width: 600px){
-  div.v-responsive__content{
-    width:100vw;
-  }
-}
 
 
 </style>

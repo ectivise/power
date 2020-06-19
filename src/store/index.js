@@ -11,6 +11,7 @@ export default new Vuex.Store({
     oltlist: [],
     login:false,
     loginresult:{},
+    snackbar:{},
   },
   mutations: {
     get_ontlist(state, get_ontresult) {
@@ -28,8 +29,18 @@ export default new Vuex.Store({
     logout(state){
       state.login = false;
     },
+    set_snackbar(state, snackbar) {
+      state.snackbar = snackbar;
+    },
+    synclogin(state,loginstatus){
+      state.login = loginstatus;
+    },
   },
   actions: {
+    setsnackbar(context, snackbar) {
+      context.commit("set_snackbar", snackbar);
+    },
+
     async get_ontlist(context) {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -128,10 +139,10 @@ export default new Vuex.Store({
         .then((result) => context.commit("loginresult", JSON.parse(result)))
         .catch((error) => console.log("error", error));
 
-      // context.dispatch("setsnackbar", {
-      //   showing: true,
-      //   text: this.state.loginresult.message,
-      // });
+      context.dispatch("setsnackbar", {
+        showing: true,
+        text: this.state.loginresult.message,
+      });
     },
   },
   getters: {
