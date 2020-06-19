@@ -4,7 +4,7 @@
       <v-app id="inspire">
         <v-navigation-drawer v-model="drawer" app>
           <v-list dense>
-            <v-list-item link to="/">
+            <v-list-item link to="/" :disabled="disabled">
               <v-list-item-action>
                 <v-icon>mdi-home</v-icon>
               </v-list-item-action>
@@ -12,7 +12,7 @@
                 <v-list-item-title>Home Dashboard</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link to="/gpon">
+            <v-list-item link to="/gpon" :disabled="disabled">
               <v-list-item-action>
                 <v-icon>mdi-router-wireless-settings</v-icon>
               </v-list-item-action>
@@ -20,7 +20,7 @@
                 <v-list-item-title>GPON</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link to="/analysis">
+            <v-list-item link to="/analysis" :disabled="disabled">
               <v-list-item-action>
                 <v-icon>mdi-database-search</v-icon>
               </v-list-item-action>
@@ -39,9 +39,11 @@
           </v-list>
         </v-navigation-drawer>
 
-        <v-app-bar app color="green" dark>
+        <v-app-bar app color="green" dark hide-on-scroll>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
           <v-toolbar-title>Power Moniter</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn v-if="login" @click="logout()">Log Out</v-btn>
         </v-app-bar>
 
         <v-content>
@@ -59,6 +61,53 @@ export default {
   data: () => ({
     drawer: null,
   }),
+  computed:{
+    login(){
+      return this.$store.state.login;
+    },
+    disabled(){
+      if(this.login == true){
+        return false
+      } else {
+        return true
+      }
+    },
+  },
+  watch: {
+    $route(to) {
+      if((to.name == "Home" || to.name == "GPON" || to.name == "Analysis") && this.login == false){
+        let url = "/login";
+        this.$router.push(url);
+      }
+    }
+  },
+  mounted(){
+    this.syncsession();
+    this.tologin();
+    
+  },
+  methods:{
+    tologin(){
+      let url = "/login";
+      this.$router.push(url);
+    },
+    async logout(){
+      // await this.$store.dispatch("logout",this.$store.getters.currentuser.mobile);
+      this.$store.commit('logout');
+      this.loginstatus();
+      this.tologin();
+    },
+    loginstatus(){
+        var obj = {
+          login: this.$store.getters.login,
+        }
+        sessionStorage.setItem('data', JSON.stringify(obj))
+    },
+    syncsession(){
+        this.$store.commit('synclogin',JSON.parse(sessionStorage.getItem('data')).login)
+    },
+  },
+  
 }
 </script>>
 

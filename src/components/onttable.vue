@@ -1,71 +1,77 @@
 <template>
-  <v-card>
-    <v-data-table
-      :headers="ontheaders"
-      :items="ontlist"
-      :search="ontsearch"
-      :expanded.sync="ontexpanded"
-      single-expand
-      item-key="_id"
-      class="elevation-1"
-      show-expand
-    >
-      <template v-slot:item.device.type="{item}" >
-        <span class="text-uppercase">{{item.device.type}}</span>
-      </template>
-      <template v-slot:item.port="{item}">
-        {{getportont(item.device.name)}}
-      </template>
-      <template v-slot:item.device.redundant="{item}">
-        <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
-      </template>
-      <template v-slot:expanded-item="{headers,item}">
-        <td :colspan="headers.length">
-          <v-container>
-            <v-row>
-              <v-col cols="6" md="4">
-                <p>
-                  Optical RX: {{item.optical.rx}}<br />
-                  Optical TX: {{item.optical.tx}}<br />
-                  last Down Time: {{item.device.lastDownTime}}<br />
-                  last Up Time: {{item.device.lastUpTime}}<br />
-                  SN: {{item.device.SN}}<br />
-                  Model: {{item.device.model}}<br />
-                  <v-divider></v-divider>
-                </p>
-                
-              </v-col>
-              <v-col cols="6" md="8">
-                  <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart>
-              </v-col>
-            </v-row>
-          </v-container>
-        </td>
-      </template>
-      <template v-slot:item.week="{ item }">{{item.device.power.power * 604800}}</template>
-      <template v-slot:item.month="{ item }">{{item.device.power.power * 2419200}}</template>
-      <template v-slot:item.year="{ item }">{{item.device.power.power * 31536000}}</template>
-      <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template>
-      <!-- <template v-slot:item.actions="{ item }">
+  <v-container fluid>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-data-table
+            :headers="ontheaders"
+            :items="ontlist"
+            :search="ontsearch"
+            :expanded.sync="ontexpanded"
+            single-expand
+            item-key="_id"
+            class="elevation-1"
+            show-expand
+          >
+            <template v-slot:item.device.type="{item}">
+              <span class="text-uppercase">{{item.device.type}}</span>
+            </template>
+            <template v-slot:item.port="{item}">{{getportont(item.device.name)}}</template>
+            <template v-slot:item.device.redundant="{item}">
+              <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
+            </template>
+            <template v-slot:expanded-item="{headers,item}">
+              <td :colspan="headers.length">
+                <v-container>
+                  <v-row>
+                    <v-col cols="6" md="4">
+                      <p>
+                        Optical RX: {{item.optical.rx}}
+                        <br />
+                        Optical TX: {{item.optical.tx}}
+                        <br />
+                        last Down Time: {{item.device.lastDownTime}}
+                        <br />
+                        last Up Time: {{item.device.lastUpTime}}
+                        <br />
+                        SN: {{item.device.SN}}
+                        <br />
+                        Model: {{item.device.model}}
+                        <br />
+                        <v-divider></v-divider>
+                      </p>
+                    </v-col>
+                    <v-col cols="6" md="8">
+                      <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </td>
+            </template>
+            <template v-slot:item.week="{ item }">{{item.device.power.power * 604800}}</template>
+            <template v-slot:item.month="{ item }">{{item.device.power.power * 2419200}}</template>
+            <template v-slot:item.year="{ item }">{{item.device.power.power * 31536000}}</template>
+            <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template>
+            <!-- <template v-slot:item.actions="{ item }">
         <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template> -->
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-toolbar-title class="font-weight-bold">ONT/MDU Devices</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="ontsearch"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            clearable
-            outlined
-            dense
-            class="px-6 mx-6"
-          ></v-text-field>
-          <!-- <v-dialog v-model="dialog" max-width="500px">
+            </template>-->
+            <template v-slot:top>
+              <v-toolbar flat color="white">
+                <v-toolbar-title class="font-weight-bold">ONT/MDU Devices</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-text-field
+                  v-model="ontsearch"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  single-line
+                  hide-details
+                  clearable
+                  outlined
+                  dense
+                  class="px-6 mx-6"
+                ></v-text-field>
+                <!-- <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-1" v-bind="attrs" v-on="on">New Item</v-btn>
             </template>
@@ -102,22 +108,25 @@
                 <v-btn color="blue darken-1" text @click="save">Save</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog> -->
-        </v-toolbar>
-      </template>
-    </v-data-table>
-  </v-card>
+                </v-dialog>-->
+              </v-toolbar>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      chartdata:{
-        '15/6' : 3,
-        '16/6' : 3,
-        '17/6' : 3.5,
-        '18/6' : 3,
+      chartdata: {
+        "15/6": 3,
+        "16/6": 3,
+        "17/6": 3.5,
+        "18/6": 3
       },
       ontexpanded: [],
       // dialog: false,
@@ -132,7 +141,7 @@ export default {
         { text: "type", value: "device.type" },
         { text: "Optical RX", value: "optical.rx" },
         { text: "Optical TX", value: "optical.tx" },
-        { text: "Port", value: "port" },
+        { text: "OLT Port", value: "port" },
         { text: "Today(kw)", value: "device.power.power" },
         { text: "Week(kw)", value: "week" },
         { text: "Month(kw)", value: "month" },
@@ -204,11 +213,11 @@ export default {
       this.close();
     },
 
-    getportont(ontname){
-      for(let i = 0; i<this.oltlist[0].ports.length; i++){
-        for(let j = 0 ; j<this.oltlist[0].ports[i].ONTs.length;j++){
-          if(this.oltlist[0].ports[i].ONTs[j] == ontname){
-            return this.oltlist[0].ports[i].portId
+    getportont(ontname) {
+      for (let i = 0; i < this.oltlist[0].ports.length; i++) {
+        for (let j = 0; j < this.oltlist[0].ports[i].ONTs.length; j++) {
+          if (this.oltlist[0].ports[i].ONTs[j] == ontname) {
+            return this.oltlist[0].ports[i].portId;
           }
         }
       }
@@ -220,7 +229,7 @@ export default {
         case "Standby":
           return "orange";
       }
-    },
+    }
   }
 };
 </script>
