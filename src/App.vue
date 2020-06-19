@@ -82,19 +82,23 @@ export default {
     ...mapState(['snackbar'])
   },
   watch: {
-    $route(to) {
+    $route(to,from) {
       if (
         (to.name == "Home" || to.name == "GPON" || to.name == "Analysis") &&
         this.login == false
       ) {
         let url = "/login";
         this.$router.push(url);
+      }else if(this.login == true && to.name == "Login"){
+        let url = from.fullPath;
+        this.$router.push(url);
       }
     }
   },
-  mounted() {
+  created() {
     this.syncsession();
     this.tologin();
+
   },
   methods: {
     tologin() {
@@ -114,10 +118,19 @@ export default {
       sessionStorage.setItem("data", JSON.stringify(obj));
     },
     syncsession() {
-      this.$store.commit(
-        "synclogin",
-        JSON.parse(sessionStorage.getItem("data")).login
-      );
+      if(sessionStorage.getItem("data") == null){
+          var obj = {
+          login: false
+        };
+        sessionStorage.setItem("data", JSON.stringify(obj));
+      }else{
+          this.$store.commit(
+          "synclogin",
+          JSON.parse(sessionStorage.getItem("data")).login
+        );
+      }
+
+      
     }
   }
 };

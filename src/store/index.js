@@ -155,6 +155,9 @@ export default new Vuex.Store({
     loginerrorcode(state) {
       return state.loginresult.errorCode;
     },
+    login(state) {
+      return state.login;
+    },
   },
   modules: {},
 });
