@@ -46,9 +46,9 @@
           <v-btn v-if="login" @click="logout()" dark color="primary">Log Out</v-btn>
         </v-app-bar>
 
-        <v-content>
+        <v-main>
           <router-view></router-view>
-        </v-content>
+        </v-main>
         <v-snackbar v-model="snackbar.showing" :timeout="3000" color="primary">
           {{snackbar.text}}
           <template v-slot:action="{attrs}">
