@@ -24,7 +24,7 @@
                 </td>
                 <td>{{item.optical.rx}}</td>
                 <td>{{item.optical.tx}}</td>
-                <td>{{getportont(item.device.name)}}</td>
+                <td>{{item.OLTport}}</td>
                 <td>{{item.device.power.power * 604800}}</td>
                 <td>{{item.device.power.power * 2419200}}</td>
                 <td>{{item.device.power.power * 31536000}}</td>
@@ -180,7 +180,7 @@
           <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="dialog=false">Close</v-btn>
+          <v-btn @click="dialog=false" color="primary">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -209,13 +209,13 @@ export default {
         },
         { text: "Status", value: "device.redundant" },
         { text: "type", value: "device.type" },
-        { text: "Optical RX", value: "optical.rx" },
-        { text: "Optical TX", value: "optical.tx" },
-        { text: "OLT Port", value: "port" },
-        { text: "Today(kw)", value: "device.power.power" },
-        { text: "Week(kw)", value: "week" },
-        { text: "Month(kw)", value: "month" },
-        { text: "Cost($)", value: "cost" },
+        { text: "Optical RX", value: "optical.rx",filterable: false, },
+        { text: "Optical TX", value: "optical.tx",filterable: false, },
+        { text: "OLT Port", value: "OLTport" },
+        { text: "Today(kw)", value: "device.power.power",filterable: false, },
+        { text: "Week(kw)", value: "week",filterable: false, },
+        { text: "Month(kw)", value: "month",filterable: false, },
+        { text: "Cost($)", value: "cost",filterable: false, },
         // { text: "Action", value: "actions", sortable: false },
         { text: "", value: "data-table-expand" }
       ],
