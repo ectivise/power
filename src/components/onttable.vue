@@ -13,7 +13,30 @@
             class="elevation-1"
             show-expand
           >
-            <template v-slot:item.device.type="{item}">
+            <template v-slot:item="{item}">
+              <tr @click="handlerow(item)">
+                <td>{{item.device.name}}</td>
+                <td><v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip></td>
+                <td><span class="text-uppercase">{{item.device.type}}</span></td>
+                <td>{{item.optical.rx}}</td>
+                <td>{{item.optical.tx}}</td>
+                <td>{{getportont(item.device.name)}}</td>
+                <td>{{item.device.power.power * 604800}}</td>
+                <td>{{item.device.power.power * 2419200}}</td>
+                <td>{{item.device.power.power * 31536000}}</td>
+                <td>{{item.device.power.power * 2419200 * 0.01}}</td>
+              </tr>
+            </template>
+            <!-- <template v-slot:item="{item}">
+              <v-dialog v-model="dialog" presistent width="500">
+                <v-card>
+                  <v-card-title>{{item.device.name}}</v-card-title>
+                  <v-card-text>test</v-card-text>
+                  <v-card-actions><v-btn @click="dialog=false">Close</v-btn></v-card-actions>
+                </v-card>
+              </v-dialog>
+            </template> -->
+            <!-- <template v-slot:item.device.type="{item}">
               <span class="text-uppercase">{{item.device.type}}</span>
             </template>
             <template v-slot:item.port="{item}">{{getportont(item.device.name)}}</template>
@@ -47,11 +70,11 @@
                   </v-row>
                 </v-container>
               </td>
-            </template>
-            <template v-slot:item.week="{ item }">{{item.device.power.power * 604800}}</template>
+            </template> -->
+            <!-- <template v-slot:item.week="{ item }">{{item.device.power.power * 604800}}</template>
             <template v-slot:item.month="{ item }">{{item.device.power.power * 2419200}}</template>
             <template v-slot:item.year="{ item }">{{item.device.power.power * 31536000}}</template>
-            <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template>
+            <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template> -->
             <!-- <template v-slot:item.actions="{ item }">
         <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -112,6 +135,27 @@
               </v-toolbar>
             </template>
           </v-data-table>
+          <v-dialog v-model="dialog" presistent width="700">
+                <v-card>
+                  <v-card-title>{{this.viewitem.device.name}}</v-card-title>
+                  <v-card-text><p class="text-left">
+                        Optical RX: {{this.viewitem.optical.rx}}
+                        <br />
+                        Optical TX: {{this.viewitem.optical.tx}}
+                        <br />
+                        last Down Time: {{this.viewitem.device.lastDownTime}}
+                        <br />
+                        last Up Time: {{this.viewitem.device.lastUpTime}}
+                        <br />
+                        SN: {{this.viewitem.device.SN}}
+                        <br />
+                        Model: {{this.viewitem.device.model}}
+                        <br />
+                        <v-divider></v-divider>
+                      </p><line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart></v-card-text>
+                  <v-card-actions><v-btn @click="dialog=false">Close</v-btn></v-card-actions>
+                </v-card>
+              </v-dialog>
         </v-card>
       </v-col>
     </v-row>
@@ -152,7 +196,49 @@ export default {
       ],
       editedIndex: -1,
       editedItem: {},
-      defaultItem: {}
+      defaultItem: {},
+      dialog:false,
+      viewitem:{
+            "optical": {
+                "rx": 0,
+                "tx": 0,
+                "timestamp": 0
+            },
+            "distance": 0,
+            "device": {
+                "health": {
+                    "temperature": 0,
+                    "cpu": 0,
+                    "mem": 0,
+                    "hdd": 0,
+                    "bandwidth": 0
+                },
+                "power": {
+                    "power6h": "",
+                    "power24h": "",
+                    "power1w": "",
+                    "power1m": "",
+                    "power1y": "",
+                    "power": 0,
+                    "voltage": 0,
+                    "current": 0
+                },
+                "name": "",
+                "IP_Address": "",
+                "type": "",
+                "category": "",
+                "lastdowncause": "",
+                "redundant": "",
+                "lastDownTime": "",
+                "lastUpTime": "",
+                "SN": "",
+                "model": ""
+            },
+            "OLTname": "",
+            "OLTport": "",
+            "subsystemPorts": [],
+            "__v": 0
+        },
     };
   },
   computed: {
@@ -183,6 +269,11 @@ export default {
   methods: {
     get_ontlist() {
       this.$store.dispatch("get_ontlist");
+    },
+
+    handlerow(item){
+      this.viewitem = item;
+      this.dialog = true;
     },
 
     editItem(item) {
