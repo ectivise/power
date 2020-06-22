@@ -16,8 +16,12 @@
             <template v-slot:item="{item}">
               <tr @click="handlerow(item)">
                 <td>{{item.device.name}}</td>
-                <td><v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip></td>
-                <td><span class="text-uppercase">{{item.device.type}}</span></td>
+                <td>
+                  <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
+                </td>
+                <td>
+                  <span class="text-uppercase">{{item.device.type}}</span>
+                </td>
                 <td>{{item.optical.rx}}</td>
                 <td>{{item.optical.tx}}</td>
                 <td>{{getportont(item.device.name)}}</td>
@@ -35,7 +39,7 @@
                   <v-card-actions><v-btn @click="dialog=false">Close</v-btn></v-card-actions>
                 </v-card>
               </v-dialog>
-            </template> -->
+            </template>-->
             <!-- <template v-slot:item.device.type="{item}">
               <span class="text-uppercase">{{item.device.type}}</span>
             </template>
@@ -70,11 +74,11 @@
                   </v-row>
                 </v-container>
               </td>
-            </template> -->
+            </template>-->
             <!-- <template v-slot:item.week="{ item }">{{item.device.power.power * 604800}}</template>
             <template v-slot:item.month="{ item }">{{item.device.power.power * 2419200}}</template>
             <template v-slot:item.year="{ item }">{{item.device.power.power * 31536000}}</template>
-            <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template> -->
+            <template v-slot:item.cost="{ item }">{{item.device.power.power * 2419200 * 0.01}}</template>-->
             <!-- <template v-slot:item.actions="{ item }">
         <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -135,36 +139,57 @@
               </v-toolbar>
             </template>
           </v-data-table>
-          <v-dialog v-model="dialog" presistent width="700">
-                <v-card>
-                  <v-card-title>{{this.viewitem.device.name}}</v-card-title>
-                  <v-card-text><p class="text-left">
-                        Optical RX: {{this.viewitem.optical.rx}}
-                        <br />
-                        Optical TX: {{this.viewitem.optical.tx}}
-                        <br />
-                        last Down Time: {{this.viewitem.device.lastDownTime}}
-                        <br />
-                        last Up Time: {{this.viewitem.device.lastUpTime}}
-                        <br />
-                        SN: {{this.viewitem.device.SN}}
-                        <br />
-                        Model: {{this.viewitem.device.model}}
-                        <br />
-                        <v-divider></v-divider>
-                      </p><line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart></v-card-text>
-                  <v-card-actions><v-btn @click="dialog=false">Close</v-btn></v-card-actions>
-                </v-card>
-              </v-dialog>
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="dialog" presistent width="700">
+      <v-card>
+        <v-card-title>{{this.viewitem.device.name}}</v-card-title>
+        <v-card-text class="text-left">
+          <h4>OLT Details</h4>
+          <p>
+            OLT Name: {{this.viewitem.OLTname}}<br>
+            OLT Port: {{this.viewitem.OLTport}}<br>
+          </p>
+          <v-divider class="mb-3"></v-divider>
+          <h4>Device Details</h4>
+          <p>
+            Last Down Time: {{this.viewitem.device.lastDownTime}}<br />
+            Last Up Time: {{this.viewitem.device.lastUpTime}}<br />
+            Last Down Cause: {{this.viewitem.device.lastdowncause}}<br />
+            SN: {{this.viewitem.device.SN}}<br />
+            Model: {{this.viewitem.device.model}}<br />
+          </p>
+            <v-divider class="mb-3"></v-divider>
+          <h4>Device Health</h4>
+          <p>
+            Bandwidth: {{this.viewitem.device.health.bandwidth}}<br />
+            CPU: {{this.viewitem.device.health.cpu}}<br />
+            HDD: {{this.viewitem.device.health.hdd}}<br />
+            MEM: {{this.viewitem.device.health.mem}}<br />
+            Temperature: {{this.viewitem.device.health.temperature}}<br />
+          </p>
+          <v-divider class="mb-3"></v-divider>
+          <h4>Device Optical</h4>
+          <p>
+            Optical RX: {{this.viewitem.optical.rx}}<br />
+            Optical TX: {{this.viewitem.optical.tx}}<br />
+            <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
+          </p>
+          <v-divider class="mb-3"></v-divider>
+          <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="dialog=false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 export default {
-  name:"onttable",
+  name: "onttable",
   data() {
     return {
       chartdata: {
@@ -197,48 +222,48 @@ export default {
       editedIndex: -1,
       editedItem: {},
       defaultItem: {},
-      dialog:false,
-      viewitem:{
-            "optical": {
-                "rx": 0,
-                "tx": 0,
-                "timestamp": 0
-            },
-            "distance": 0,
-            "device": {
-                "health": {
-                    "temperature": 0,
-                    "cpu": 0,
-                    "mem": 0,
-                    "hdd": 0,
-                    "bandwidth": 0
-                },
-                "power": {
-                    "power6h": "",
-                    "power24h": "",
-                    "power1w": "",
-                    "power1m": "",
-                    "power1y": "",
-                    "power": 0,
-                    "voltage": 0,
-                    "current": 0
-                },
-                "name": "",
-                "IP_Address": "",
-                "type": "",
-                "category": "",
-                "lastdowncause": "",
-                "redundant": "",
-                "lastDownTime": "",
-                "lastUpTime": "",
-                "SN": "",
-                "model": ""
-            },
-            "OLTname": "",
-            "OLTport": "",
-            "subsystemPorts": [],
-            "__v": 0
+      dialog: false,
+      viewitem: {
+        optical: {
+          rx: 0,
+          tx: 0,
+          timestamp: 0
         },
+        distance: 0,
+        device: {
+          health: {
+            temperature: 0,
+            cpu: 0,
+            mem: 0,
+            hdd: 0,
+            bandwidth: 0
+          },
+          power: {
+            power6h: "",
+            power24h: "",
+            power1w: "",
+            power1m: "",
+            power1y: "",
+            power: 0,
+            voltage: 0,
+            current: 0
+          },
+          name: "",
+          IP_Address: "",
+          type: "",
+          category: "",
+          lastdowncause: "",
+          redundant: "",
+          lastDownTime: "",
+          lastUpTime: "",
+          SN: "",
+          model: ""
+        },
+        OLTname: "",
+        OLTport: "",
+        subsystemPorts: [],
+        __v: 0
+      }
     };
   },
   computed: {
@@ -271,7 +296,7 @@ export default {
       this.$store.dispatch("get_ontlist");
     },
 
-    handlerow(item){
+    handlerow(item) {
       this.viewitem = item;
       this.dialog = true;
     },
