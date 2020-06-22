@@ -5,7 +5,7 @@
       </v-row>
     <v-row>
       <v-col cols="12" lg="4" md="6" sm="12" offset-lg="4" offset-md="3" offset-sm="0" offset="0">
-        <v-form>
+        <v-form v-model="valid">
           <h1>Login</h1>
           <v-text-field
             label="Phone Number"
@@ -14,11 +14,28 @@
             required
             @focus="resetvalidation()"
           ></v-text-field>
+          <v-row>
+            <v-col cols="6" md="8">
+            <v-text-field label="OTP" required v-model="logininfo.otp" :rules="otprules"></v-text-field>
+            </v-col>
+            <v-col cols="6" md="4">
+              <v-btn
+                color="primary"
+                class="my-3 mx-0"
+                @click="handleloginotp()"
+                :disabled="otpdisabled"
+              >Sent OTP</v-btn>
+            </v-col>
+          </v-row>
+          
+          
+          <v-btn color="blue darken-1" :disabled="!valid" class="white--text" @click="loginotp()">Submit</v-btn>
+          
           <!-- <v-text-field label="Password" v-model="logininfo.password" :rules="[v => !!v || 'item is required for Login']" required @focus="resetvalidation()" type="password"></v-text-field> -->
           <!-- <v-btn class="primary ma-3" @click="handlelogin()" :disabled="logindisabled">login</v-btn> -->
 
           <!-- login with OTP -->
-          <v-dialog v-model="dialog" persistent max-width="600px">
+          <!-- <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 color="primary"
@@ -56,7 +73,7 @@
                 <v-btn color="blue darken-1" text @click="loginotp()">Submit</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
         </v-form>
       </v-col>
     </v-row>
@@ -67,6 +84,7 @@
 export default {
   data() {
     return {
+      valid: false,
       name: "Login",
       logininfo: {
         phonenumber: "",
