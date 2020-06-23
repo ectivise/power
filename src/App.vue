@@ -195,7 +195,7 @@ export default {
 </script>>
 
 
-<style lang="scss">
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -215,5 +215,10 @@ export default {
       color: #42b983;
     }
   }
+}
+
+.v-application .primary--text {
+    color: unset !important;
+    caret-color: unset !important;
 }
 </style>
