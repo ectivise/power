@@ -11,24 +11,18 @@
             single-expand
             item-key="_id"
             class="elevation-1"
-            show-expand
           >
             <template v-slot:item="{item}">
               <tr @click="handlerow(item)">
-                <td>{{item.device.name}}</td>
-                <td>
-                  <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
-                </td>
-                <td>
-                  <span class="text-uppercase">{{item.device.type}}</span>
-                </td>
+                <td><v-chip :color="getColor(item.device.redundant)" dark class="caption" small>{{ item.device.redundant }}</v-chip> {{item.device.name}}</td>
+                <td>{{item.OLTport}}</td>
+                <td>{{item.distance}}</td>
                 <td>{{item.optical.rx}}</td>
                 <td>{{item.optical.tx}}</td>
-                <td>{{item.OLTport}}</td>
+                <td><span class="text-uppercase">{{item.device.type}}</span></td>
                 <td>{{item.device.power.power * 604800}}</td>
                 <td>{{item.device.power.power * 2419200}}</td>
                 <td>{{item.device.power.power * 31536000}}</td>
-                <td>{{item.device.power.power * 2419200 * 0.01}}</td>
               </tr>
             </template>
             <!-- <template v-slot:item="{item}">
@@ -163,21 +157,27 @@
             <v-divider class="mb-3"></v-divider>
           <h4>Device Health</h4>
           <p>
-            Bandwidth: {{this.viewitem.device.health.bandwidth}}<br />
+            Bandwidth: {{this.viewitem.device.health.bandwidth}}%<br />
             CPU: {{this.viewitem.device.health.cpu}}<br />
             HDD: {{this.viewitem.device.health.hdd}}<br />
             MEM: {{this.viewitem.device.health.mem}}<br />
-            Temperature: {{this.viewitem.device.health.temperature}}<br />
+            Temperature: {{this.viewitem.device.health.temperature}}°C<br />
           </p>
           <v-divider class="mb-3"></v-divider>
           <h4>Device Optical</h4>
           <p>
             Optical RX: {{this.viewitem.optical.rx}}<br />
             Optical TX: {{this.viewitem.optical.tx}}<br />
+            Distance: {{this.viewitem.distance}}m<br />
             <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
           </p>
           <v-divider class="mb-3"></v-divider>
-          <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false"></line-chart>
+          <h4>Power</h4>
+          <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false" class="mt-3"></line-chart><br>
+          <p>
+            Cost: $120<br>
+          </p>
+          
         </v-card-text>
         <v-card-actions>
           <v-btn @click="dialog=false" color="primary">Close</v-btn>
@@ -203,21 +203,19 @@ export default {
       ontsearch: "",
       ontheaders: [
         {
-          text: "Device",
+          text: "Name",
           align: "start",
           value: "device.name"
         },
-        { text: "Status", value: "device.redundant" },
-        { text: "type", value: "device.type" },
+        { text: "OLT Port", value: "OLTport" },
+        { text: "Distance", value: "distance" },
         { text: "Optical RX", value: "optical.rx",filterable: false, },
         { text: "Optical TX", value: "optical.tx",filterable: false, },
-        { text: "OLT Port", value: "OLTport" },
+        { text: "Type", value: "device.type" },
         { text: "Today(kw)", value: "device.power.power",filterable: false, },
         { text: "Week(kw)", value: "week",filterable: false, },
         { text: "Month(kw)", value: "month",filterable: false, },
-        { text: "Cost($)", value: "cost",filterable: false, },
         // { text: "Action", value: "actions", sortable: false },
-        { text: "", value: "data-table-expand" }
       ],
       editedIndex: -1,
       editedItem: {},
