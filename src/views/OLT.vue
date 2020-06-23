@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6" lg="6"> 
         <v-card>
           <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
@@ -41,7 +41,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col cols="12" md="6" lg="6">
         <v-card>
           <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
