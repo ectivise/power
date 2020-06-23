@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer v-model="drawer" app>
+        <v-navigation-drawer v-model="drawer" app color="blue-grey lighten-2">
           <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-action>

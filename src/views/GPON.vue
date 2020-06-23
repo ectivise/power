@@ -2,7 +2,7 @@
   <v-containter fluid>
     <v-row>
       <v-col align="center">
-        <v-img alt="image of gpon model" src="../assets/gponmodel.jpeg" contain width="500px"></v-img>
+        <v-img alt="image of gpon model" src="http://dev1.ectivisecloud.com:8081/images/gponmodel.png" width="500px"></v-img>
       </v-col>
     </v-row>
     <v-row>
