@@ -5,14 +5,14 @@
         <v-card>
           <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
-            {{oltlist[0].device.name}}
+            {{oltlist[0].device.name}}<v-chip :color="getColor(oltlist[0].device.redundant)" class="ma-2" dark small>{{oltlist[0].device.redundant }}</v-chip>
           </v-card-title>
           <v-card-text align="left" class="ma-2 title">
             IP: {{oltlist[0].device.IP_Address}}<br>
             Power: {{oltlist[0].device.power.power}}kw<br>
             Optical RX: {{oltlist[0].optical.rx}}<br>
             Optical TX: {{oltlist[0].optical.tx}}<br>
-            <v-chip :color="getColor(oltlist[0].device.redundant)" class="ma-2" dark>{{oltlist[0].device.redundant }}</v-chip>
+            ONT Count: {{getontcount(oltlist[0].ports)}}<br>
           </v-card-text>
         </v-card>
       </v-col>
@@ -20,14 +20,14 @@
         <v-card>
             <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
-            {{oltlist[1].device.name}}
+            {{oltlist[1].device.name}}<v-chip :color="getColor(oltlist[1].device.redundant)" class="ma-2" dark small>{{oltlist[1].device.redundant }}</v-chip>
           </v-card-title>
           <v-card-text align="left" class="ma-2 title">
             IP: {{oltlist[1].device.IP_Address}}<br>
             Power: {{oltlist[1].device.power.power}}kw<br>
             Optical RX: {{oltlist[1].optical.rx}}<br>
             Optical TX: {{oltlist[1].optical.tx}}<br>
-            <v-chip :color="getColor(oltlist[1].device.redundant)" class="ma-2" dark>{{oltlist[1].device.redundant }}</v-chip>
+            ONT Count: {{getontcount(oltlist[1].ports)}}<br>
           </v-card-text>
         </v-card>
       </v-col>
@@ -64,7 +64,14 @@ export default {
         case "Standby":
           return "orange";
       }
-    }
+    },
+    getontcount(ports) {
+      var ontcount = 0
+      for(let i=0; i<ports.length;i++){
+        ontcount += ports[i].ONTs.length;
+      }
+      return ontcount;
+    },
   }
 };
 </script>

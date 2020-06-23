@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <v-app id="inspire">
         <v-navigation-drawer app color="blue-grey lighten-2" permanent expand-on-hover>
-          <v-list dense>
+          <!-- <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-icon>
                 <v-icon>mdi-home</v-icon>
@@ -36,14 +36,39 @@
                 <v-list-item-title>Analysis</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <!-- <v-list-item link to="/ont">
-              <v-list-item-action>
-                <v-icon>mdi-router-network</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>ONT/MDU</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>-->
+          </v-list>-->
+          <v-list :disabled="disabled">
+            <div v-for="(link, i) in links" :key="i">
+              <v-list-item
+                v-if="!link.subLinks"
+                :key="i"
+                :to="link.to"
+                class="v-list-item"
+              >
+                <v-list-item-icon>
+                  <v-icon>{{ link.icon }}</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-title v-text="link.text" />
+              </v-list-item>
+
+              <v-list-group v-else :key="link.text" no-action :prepend-icon="links[1].icon">
+                <template v-slot:activator>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ link.text }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </template>
+
+                <v-list-item v-for="sublink in link.subLinks" :to="sublink.to" :key="sublink.text">
+                  <v-list-item-icon>
+                    <v-icon>{{sublink.icon}}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title v-text="sublink.text" />
+                </v-list-item>
+              </v-list-group>
+            </div>
           </v-list>
         </v-navigation-drawer>
 
@@ -70,12 +95,39 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   data: () => ({
     // drawer: null
-    
+    links: [
+      {
+        to: "/",
+        icon: "mdi-view-dashboard",
+        text: "Home Dashboard"
+      },
+      {
+        icon:"mdi-router-wireless-settings",
+        text: "GPON",
+        subLinks: [
+          {
+            icon: "mdi-router-network",
+            text: "OLT",
+            to: "/olt"
+          },
+          {
+            icon: "mdi-router-wireless",
+            text: "ONT",
+            to: "/gpon"
+          }
+        ]
+      },
+      {
+        to: "/analysis",
+        icon: "mdi-database-search",
+        text: "Analysis"
+      }
+    ]
   }),
   computed: {
     login() {
@@ -88,17 +140,17 @@ export default {
         return true;
       }
     },
-    ...mapState(['snackbar'])
+    ...mapState(["snackbar"])
   },
   watch: {
-    $route(to,from) {
+    $route(to, from) {
       if (
-        (to.name == "Home" || to.name == "GPON" || to.name == "Analysis") &&
+        (to.name == "Home" || to.name == "GPON" || to.name == "Analysis" || to.name == "OLT") &&
         this.login == false
       ) {
         let url = "/login";
         this.$router.push(url);
-      }else if(this.login == true && to.name == "Login"){
+      } else if (this.login == true && to.name == "Login") {
         let url = from.fullPath;
         this.$router.push(url);
       }
@@ -107,7 +159,6 @@ export default {
   created() {
     this.syncsession();
     this.tologin();
-
   },
   methods: {
     tologin() {
@@ -127,19 +178,17 @@ export default {
       sessionStorage.setItem("data", JSON.stringify(obj));
     },
     syncsession() {
-      if(sessionStorage.getItem("data") == null){
-          var obj = {
+      if (sessionStorage.getItem("data") == null) {
+        var obj = {
           login: false
         };
         sessionStorage.setItem("data", JSON.stringify(obj));
-      }else{
-          this.$store.commit(
+      } else {
+        this.$store.commit(
           "synclogin",
           JSON.parse(sessionStorage.getItem("data")).login
         );
       }
-
-      
     }
   }
 };
