@@ -12,6 +12,7 @@
             Power: {{oltlist[0].device.power.power}}kw<br>
             Optical RX: {{oltlist[0].optical.rx}}<br>
             Optical TX: {{oltlist[0].optical.tx}}<br>
+            Port Count: {{oltlist[0].ports.length}}<br>
             ONT Count: {{getontcount(oltlist[0].ports)}}<br>
           </v-card-text>
         </v-card>
@@ -27,6 +28,7 @@
             Power: {{oltlist[1].device.power.power}}kw<br>
             Optical RX: {{oltlist[1].optical.rx}}<br>
             Optical TX: {{oltlist[1].optical.tx}}<br>
+            Port Count: {{oltlist[0].ports.length}}<br>
             ONT Count: {{getontcount(oltlist[1].ports)}}<br>
           </v-card-text>
         </v-card>
