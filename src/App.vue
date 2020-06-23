@@ -2,28 +2,36 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer v-model="drawer" app color="blue-grey lighten-2">
+        <v-navigation-drawer app color="blue-grey lighten-2" permanent expand-on-hover>
           <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
-              <v-list-item-action>
+              <v-list-item-icon>
                 <v-icon>mdi-home</v-icon>
-              </v-list-item-action>
+              </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Home Dashboard</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item link to="/gpon" :disabled="disabled">
-              <v-list-item-action>
-                <v-icon>mdi-router-wireless-settings</v-icon>
-              </v-list-item-action>
+            <v-list-item link to="/olt" :disabled="disabled">
+              <v-list-item-icon>
+                <v-icon>mdi-router-network</v-icon>
+              </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>GPON</v-list-item-title>
+                <v-list-item-title>GPON OLT</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item link to="/gpon" :disabled="disabled">
+              <v-list-item-icon>
+                <v-icon>mdi-router-wireless-settings</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>GPON ONT</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item link to="/analysis" :disabled="disabled">
-              <v-list-item-action>
+              <v-list-item-icon>
                 <v-icon>mdi-database-search</v-icon>
-              </v-list-item-action>
+              </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Analysis</v-list-item-title>
               </v-list-item-content>
@@ -40,7 +48,7 @@
         </v-navigation-drawer>
 
         <v-app-bar app color="green" dark hide-on-scroll>
-          <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+          <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
           <v-toolbar-title>Power Moniter</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn v-if="login" @click="logout()" dark color="primary">Log Out</v-btn>
@@ -55,7 +63,7 @@
             <v-btn text @click="snackbar.showing = false" v-bind="attrs">close</v-btn>
           </template>
         </v-snackbar>
-        <v-footer color="green" app></v-footer>
+        <!-- <v-footer color="green" app></v-footer> -->
       </v-app>
     </v-app>
   </div>
@@ -66,7 +74,8 @@ import { mapState } from 'vuex'
 
 export default {
   data: () => ({
-    drawer: null
+    // drawer: null
+    
   }),
   computed: {
     login() {

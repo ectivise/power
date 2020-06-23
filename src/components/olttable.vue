@@ -5,27 +5,19 @@
       :items="oltlist"
       :search="oltsearch"
       :expanded.sync="oltexpanded"
-      single-expand
       item-key="device.name"
       class="elevation-1"
-      show-expand
     >
-      <template v-slot:expanded-item="{headers,item}">
-        <td :colspan="headers.length">
-          Optical RX:  {{ item.optical.rx }}<br>
-          Optical TX:  {{ item.optical.tx }}<br>
-        </td>
-      </template>
       <template v-slot:item.cost="{ item }">
         {{item.device.power.power * 0.01}}
       </template>
       <template v-slot:item.device.redundant="{ item }">
       <v-chip :color="getColor(item.device.redundant)" dark>{{ item.device.redundant }}</v-chip>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <!-- <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template>
+      </template> -->
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-toolbar-title class="font-weight-bold">OLT Devices</v-toolbar-title>
@@ -41,7 +33,7 @@
             dense
             class="px-6 mx-6"
           ></v-text-field>
-          <v-dialog v-model="dialog" max-width="500px">
+          <!-- <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-1" v-bind="attrs" v-on="on">New Item</v-btn>
             </template>
@@ -78,7 +70,7 @@
                 <v-btn color="blue darken-1" text @click="save">Save</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -105,8 +97,8 @@ export default {
         { text: "Status", value: "device.redundant" },
         { text: "Today(kw)", value: "device.power.power" },
         { text: "Cost($)", value: "cost" },
-        { text: "Action", value: "actions", sortable: false },
-        { text: "", value: "data-table-expand" }
+        // { text: "Action", value: "actions", sortable: false },
+        // { text: "", value: "data-table-expand" }
       ],
       editedIndex: -1,
       editedItem: {},

@@ -51,10 +51,10 @@ export default {
     }
   },
   created() {
-    this.get_ontlist();
+    this.get_oltlist();
   },
   methods: {
-    get_ontlist() {
+    get_oltlist() {
       this.$store.dispatch("get_oltlist");
     },
     getColor(status) {

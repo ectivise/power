@@ -172,7 +172,7 @@
             <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
           </p>
           <v-divider class="mb-3"></v-divider>
-          <h4>Power</h4>
+          <h4>Device Power</h4>
           <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false" class="mt-3"></line-chart><br>
           <p>
             Cost: $120<br>
