@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer app color="blue-grey lighten-2" permanent width="230px">
+        <v-navigation-drawer app v-model="login" color="blue-grey lighten-2" :permanent="login" width="230px">
           <!-- <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-icon>
@@ -99,7 +99,7 @@ import { mapState } from "vuex";
 
 export default {
   data: () => ({
-    // drawer: null
+    drawer: false,
     links: [
       {
         to: "/",
