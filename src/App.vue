@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer app v-model="login" color="blue-grey" :permanent="login" width="230px">
+        <v-navigation-drawer app v-model="login" color="blue-grey" :permanent="login" width="230px" >
           <!-- <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-icon>
@@ -37,14 +37,14 @@
               </v-list-item-content>
             </v-list-item>
           </v-list>-->
-          <v-list :disabled="disabled">
+          <v-list :disabled="disabled" >
             <div v-for="(link, i) in links" :key="i">
               <v-list-item
                 v-if="!link.subLinks"
                 :key="i"
                 :to="link.to"
-                class="v-list-item"
-                active-class="green lighten-1"
+                class="v-list-item white--text"
+                active-class="green"
               >
                 <v-list-item-icon>
                   <v-icon>{{ link.icon }}</v-icon>
@@ -62,7 +62,7 @@
                   </v-list-item>
                 </template>
 
-                <v-list-item v-for="sublink in link.subLinks" :to="sublink.to" :key="sublink.text" active-class="green lighten-1">
+                <v-list-item v-for="sublink in link.subLinks" :to="sublink.to" :key="sublink.text" active-class="green" class="white--text">
                   <v-list-item-icon>
                     <v-icon>{{sublink.icon}}</v-icon>
                   </v-list-item-icon>
@@ -227,4 +227,5 @@ export default {
     color: unset !important;
     caret-color: unset !important;
 }
+
 </style>
