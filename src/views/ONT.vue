@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <onttable/>
-  </div>
+  <v-containter fluid>
+    <v-row>
+      <v-col>
+        <onttable/>
+      </v-col>
+    </v-row>
+  </v-containter>
 </template>
 
 <script>
-import onttable from "../components/onttable.vue"
+import onttable from "../components/onttable.vue";
+
 export default {
-    components:{
-        onttable,
-    }
+  name:"gpon",
+  components:{
+    onttable,
+  }
 }
 </script>
 
-<style>
+<style  scoped>
+
 
 </style>

@@ -16,7 +16,7 @@
               <tr @click="handlerow(item)">
                 <td><v-chip :color="getColor(item.device.redundant)" dark class="caption" small>{{ item.device.redundant }}</v-chip> {{item.device.name}}</td>
                 <td>{{item.OLTport}}</td>
-                <td>{{item.distance}}</td>
+                <td>{{item.optical.distance}}</td>
                 <td>{{item.optical.rx}}</td>
                 <td>{{item.optical.tx}}</td>
                 <td><span class="text-uppercase">{{item.device.type}}</span></td>
@@ -168,7 +168,7 @@
           <p>
             Optical RX: {{this.viewitem.optical.rx}}<br />
             Optical TX: {{this.viewitem.optical.tx}}<br />
-            Distance: {{this.viewitem.distance}}m<br />
+            Distance: {{this.viewitem.optical.distance}}m<br />
             <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
           </p>
           <v-divider class="mb-3"></v-divider>

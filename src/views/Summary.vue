@@ -1,5 +1,5 @@
 <template>
-  <v-containter fluid>
+  <v-container fluid>
     <v-row>
       <v-col align="center">
         <v-img alt="image of gpon model" src="http://dev1.ectivisecloud.com:8081/images/gponmodel.png" width="500px"></v-img>
@@ -15,7 +15,7 @@
         <onttable/>
       </v-col>
     </v-row>
-  </v-containter>
+  </v-container>
 </template>
 
 <script>
@@ -31,7 +31,6 @@ export default {
 }
 </script>
 
-<style  scoped>
-
+<style>
 
 </style>

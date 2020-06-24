@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer app color="blue-grey lighten-2" permanent expand-on-hover>
+        <v-navigation-drawer app color="blue-grey lighten-2" permanent width="230px">
           <!-- <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-icon>
@@ -112,13 +112,18 @@ export default {
         subLinks: [
           {
             icon: "mdi-router-network",
+            text: "Summary",
+            to: "/summary"
+          },
+          {
+            icon: "mdi-router-network",
             text: "OLT",
             to: "/olt"
           },
           {
             icon: "mdi-router-wireless",
             text: "ONT",
-            to: "/gpon"
+            to: "/ont"
           }
         ]
       },
