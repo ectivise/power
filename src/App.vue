@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer app v-model="login" color="blue-grey lighten-2" :permanent="login" width="230px">
+        <v-navigation-drawer app v-model="login" color="blue-grey" :permanent="login" width="230px">
           <!-- <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-icon>
@@ -44,6 +44,7 @@
                 :key="i"
                 :to="link.to"
                 class="v-list-item"
+                active-class="green lighten-1"
               >
                 <v-list-item-icon>
                   <v-icon>{{ link.icon }}</v-icon>
@@ -52,7 +53,7 @@
                 <v-list-item-title v-text="link.text" />
               </v-list-item>
 
-              <v-list-group v-else :key="link.text" no-action :prepend-icon="links[1].icon">
+              <v-list-group v-else :key="link.text" no-action :prepend-icon="links[1].icon" >
                 <template v-slot:activator>
                   <v-list-item>
                     <v-list-item-content>
@@ -61,7 +62,7 @@
                   </v-list-item>
                 </template>
 
-                <v-list-item v-for="sublink in link.subLinks" :to="sublink.to" :key="sublink.text">
+                <v-list-item v-for="sublink in link.subLinks" :to="sublink.to" :key="sublink.text" active-class="green lighten-1">
                   <v-list-item-icon>
                     <v-icon>{{sublink.icon}}</v-icon>
                   </v-list-item-icon>
