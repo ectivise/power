@@ -31,13 +31,10 @@
             Optical TX: {{oltlist[0].optical.tx}}<br>
             <v-divider class="mb-3"></v-divider>
             <h3>Device Power</h3>
-            <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false" class="mt-3"></line-chart><br>
-          <p>
-            Power: {{oltlist[0].device.power.power}}<br>
-            Cost: $120<br>
-          </p>
-            
-            <v-divider class="mb-3"></v-divider>
+            <p>
+              Power: {{oltlist[0].device.power.power}}<br>
+              Cost: ${{oltlist[0].device.power.power * 10}}<br>
+            </p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -66,13 +63,10 @@
             Optical TX: {{oltlist[1].optical.tx}}<br>
             <v-divider class="mb-3"></v-divider>
             <h3>Device Power</h3>
-            <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false" class="mt-3"></line-chart><br>
-          <p>
-            Power: {{oltlist[1].device.power.power}}<br>
-            Cost: $120<br>
-          </p>
-            
-            <v-divider class="mb-3"></v-divider>
+            <p>
+              Power: {{oltlist[1].device.power.power}}<br>
+              Cost:${{oltlist[1].device.power.power * 10}}<br>
+            </p>
           </v-card-text>
         </v-card>
       </v-col>
