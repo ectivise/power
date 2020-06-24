@@ -127,7 +127,7 @@
         </v-simple-table>
           </v-card-text>
         <v-card-actions>
-          <v-btn color="green" outlined to="/gpon">View More</v-btn>
+          <v-btn color="green" outlined to="/summary">View More</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
