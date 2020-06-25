@@ -22,7 +22,7 @@
           <v-card-title>Today</v-card-title>
           <v-card-text class="pt-0">
             <div class="title font-weight-light mb-2 grey--text">Accumulated Power, 15-6-2020 12am</div>
-            <div class="display-1 font-weight-light grey--text">20kw</div>
+            <div class="display-1 font-weight-light grey--text">{{power24h}}w</div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -47,7 +47,7 @@
           <v-card-title>Week</v-card-title>
           <v-card-text class="pt-0">
             <div class="title font-weight-light mb-2">Accumulated Power, 15-6-2020</div>
-            <div class="display-1 font-weight-light grey--text">40kw</div>
+            <div class="display-1 font-weight-light grey--text">{{power1w}}w</div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -72,7 +72,7 @@
           <v-card-title>Month</v-card-title>
           <v-card-text class="pt-0">
             <div class="title font-weight-light mb-2">Accumulated Power, June 2020</div>
-            <div class="display-1 font-weight-light grey--text">80kw</div>
+            <div class="display-1 font-weight-light grey--text">{{power1m}}w</div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -97,7 +97,7 @@
           <v-card-title>Year</v-card-title>
           <v-card-text class="pt-0">
             <div class="title font-weight-light mb-2">Accumulated Power, Year 2020</div>
-            <div class="display-1 font-weight-light grey--text">160kw</div>
+            <div class="display-1 font-weight-light grey--text">{{power1y}}w</div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -175,6 +175,54 @@ export default {
     },
   },
   computed:{
+    power24h(){
+      if(this.$store.getters.ontlist == undefined){
+        return "no power"
+      } else{
+        var total = 0;
+        var list = [...this.$store.getters.ontlist];
+        for(let i=0; i<list.length; i++){
+            total += Number(list[i].device.power.power24h)
+          }
+        return total
+      }
+    },
+    power1w(){
+      if(this.$store.getters.ontlist == undefined){
+        return "no power"
+      } else{
+        var total = 0;
+        var list = [...this.$store.getters.ontlist];
+        for(let i=0; i<list.length; i++){
+            total += Number(list[i].device.power.power1w)
+          }
+        return total
+      }
+    },
+    power1m(){
+      if(this.$store.getters.ontlist == undefined){
+        return "no power"
+      } else{
+        var total = 0;
+        var list = [...this.$store.getters.ontlist];
+        for(let i=0; i<list.length; i++){
+            total += Number(list[i].device.power.power1m)
+          }
+        return total
+      }
+    },
+    power1y(){
+      if(this.$store.getters.ontlist == undefined){
+        return "no power"
+      } else{
+        var total = 0;
+        var list = [...this.$store.getters.ontlist];
+        for(let i=0; i<list.length; i++){
+            total += Number(list[i].device.power.power1y)
+          }
+        return total
+      }
+    },
     top5ont(){
       if(this.$store.getters.ontlist == undefined){
         return []
@@ -196,8 +244,6 @@ export default {
           list.splice(maxindex,1);
           count++;
         }
-        
-
         return top5array;
       }
       
