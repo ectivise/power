@@ -11,6 +11,7 @@
             single-expand
             item-key="_id"
             class="elevation-1"
+            :mobile-breakpoint='NaN'
           >
             <template v-slot:item="{item}">
               <tr @click="handlerow(item)" class="text-left">
@@ -80,9 +81,10 @@
             </template>-->
             <template v-slot:top>
               <v-toolbar flat color="white">
-                <v-toolbar-title class="font-weight-bold">ONT/MDU Devices</v-toolbar-title>
+                <v-toolbar-title class="font-weight-bold">ONT/MDU</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-text-field
+                <v-toolbar-items>
+                  <v-text-field
                   v-model="ontsearch"
                   append-icon="mdi-magnify"
                   label="Search"
@@ -91,8 +93,9 @@
                   clearable
                   outlined
                   dense
-                  class="px-6 mx-6"
                 ></v-text-field>
+                </v-toolbar-items>
+                
                 <!-- <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-1" v-bind="attrs" v-on="on">New Item</v-btn>
@@ -351,5 +354,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@media screen and (max-width: 600px){
+    .v-text-field{
+        width: 200px;
+  }
+}
+
+
+
+@media screen and (min-width: 601px){
+    .v-text-field{
+        width: 300px;
+  }
+}
 </style>

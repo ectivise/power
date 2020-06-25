@@ -119,7 +119,7 @@ export default {
       },
       {
         icon: "mdi-router-wireless",
-        text: "ONT",
+        text: "ONU",
         to: "/ont"
       },
       // {
