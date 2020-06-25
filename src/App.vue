@@ -2,7 +2,7 @@
   <div id="app">
     <v-app id="inspire">
       <v-app id="inspire">
-        <v-navigation-drawer app v-model="login" color="blue-grey lighten-2" :permanent="login" width="230px" >
+        <v-navigation-drawer app v-model="drawer" color="blue-grey lighten-2" :permanent="($vuetify.breakpoint.name == 'xs' ||  $vuetify.breakpoint.name == 'sm') ? false : login" width="230px" >
           <!-- <v-list dense>
             <v-list-item link to="/" :disabled="disabled">
               <v-list-item-icon>
@@ -74,7 +74,7 @@
         </v-navigation-drawer>
 
         <v-app-bar app color="green" dark hide-on-scroll>
-          <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
+          <v-app-bar-nav-icon v-if="$vuetify.breakpoint.name == 'xs' ||  $vuetify.breakpoint.name == 'sm'" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
           <v-toolbar-title>Power Moniter</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn v-if="login" @click="logout()" dark color="primary">Log Out</v-btn>

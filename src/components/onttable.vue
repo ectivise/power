@@ -14,7 +14,7 @@
           >
             <template v-slot:item="{item}">
               <tr @click="handlerow(item)" class="text-left">
-                <td><v-chip :color="getColor(item.device.redundant)" dark class="caption" small>{{ item.device.redundant }}</v-chip> {{item.device.name}}</td>
+                <td><v-chip :color="getColor(item.device.redundant)" dark class="caption" small></v-chip> {{item.device.name}}</td>
                 <td>{{item.device_id}}</td>
                 <td>{{item.OLTport}}</td>
                 <td>{{item.optical.distance}}</td>
