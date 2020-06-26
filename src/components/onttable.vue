@@ -140,7 +140,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="dialog" presistent width="700">
+    <v-dialog v-model="dialog" presistent :width="$vuetify.breakpoint.mobile ? '' : '70vw'">
       <v-card>
         <v-card-title>{{this.viewitem.device.name}}</v-card-title>
         <v-card-text class="text-left">
@@ -176,8 +176,8 @@
             <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
           </p>
           <v-divider class="mb-3"></v-divider>
-          <h4>Device Power</h4>
-          <line-chart :data="chartdata" xtitle="Date" ytitle="Power(Kw)" :curve="false" class="mt-3"></line-chart><br>
+          <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart><br>
+          <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3"></line-chart><br>
           <p>
             Cost: $120<br>
           </p>
@@ -196,7 +196,13 @@ export default {
   name: "onttable",
   data() {
     return {
-      chartdata: {
+      rxdata: {
+        "15/6": 3,
+        "16/6": 3,
+        "17/6": 3.5,
+        "18/6": 3
+      },
+      txdata: {
         "15/6": 3,
         "16/6": 3,
         "17/6": 3.5,

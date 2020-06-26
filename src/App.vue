@@ -166,7 +166,7 @@ export default {
   watch: {
     $route(to, from) {
       if (
-        (to.name == "Home" || to.name == "GPON" || to.name == "Analysis" || to.name == "OLT") &&
+        (to.name == "Home" || to.name == "GPON" || to.name == "Analysis" || to.name == "OLT" || to.name == "OLT_Detail") &&
         this.login == false
       ) {
         let url = "/login";
