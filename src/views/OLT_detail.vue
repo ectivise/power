@@ -55,29 +55,31 @@
             <line-chart
               :data="rxdata"
               xtitle="Date"
-              ytitle="Optical RX"
+              ytitle="Optical TX"
               :curve="false"
               class="mt-3"
             ></line-chart>
             <v-divider class="mb-3"></v-divider>
+            <h3>Gausian</h3>
+            <line-chart :data="bellcurvedata" xtitle="Power" ytitle="Frequency" class="mt-3"></line-chart>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-          <port_ont_table/>
+        <port_ont_table />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import port_ont_table from "../components/port_ont_table.vue"
+import port_ont_table from "../components/port_ont_table.vue";
 
 export default {
-  components:{
-      port_ont_table,
+  components: {
+    port_ont_table
   },
   name: "olt_details",
   data() {
@@ -94,6 +96,17 @@ export default {
         "16/6": 3,
         "17/6": 3.5,
         "18/6": 3
+      },
+      bellcurvedata: {
+        "20":  1,
+        "30":  2,
+        "40":  3,
+        "50":  4,
+        "60":  5,
+        "70":  4,
+        "80":  3,
+        "90":  2,
+        "100":  1,
       }
     };
   },
