@@ -21,9 +21,9 @@
             <v-divider class="mb-3"></v-divider>
             <h3>Device Health</h3>
             Bandwidth: {{oltlist[0].device.health.bandwidth}}%<br>
-            CPU: {{oltlist[0].device.health.cpu}}<br>
-            HDD: {{oltlist[0].device.health.hdd}}<br>
-            MEM: {{oltlist[0].device.health.mem}}<br>
+            CPU: {{oltlist[0].device.health.cpu}}%<br>
+            HDD: {{oltlist[0].device.health.hdd}}%<br>
+            MEM: {{oltlist[0].device.health.mem}}%<br>
             Temperature: {{oltlist[0].device.health.temperature}}°C<br>
             <v-divider class="mb-3"></v-divider>
             <h3>Device Optical</h3>
@@ -53,9 +53,9 @@
             <v-divider class="mb-3"></v-divider>
             <h3>Device Health</h3>
             Bandwidth: {{oltlist[1].device.health.bandwidth}}%<br>
-            CPU: {{oltlist[1].device.health.cpu}}<br>
-            HDD: {{oltlist[1].device.health.hdd}}<br>
-            MEM: {{oltlist[1].device.health.mem}}<br>
+            CPU: {{oltlist[1].device.health.cpu}}%<br>
+            HDD: {{oltlist[1].device.health.hdd}}%<br>
+            MEM: {{oltlist[1].device.health.mem}}%<br>
             Temperature: {{oltlist[1].device.health.temperature}}°C<br>
             <v-divider class="mb-3"></v-divider>
             <h3>Device Optical</h3>

@@ -5,15 +5,11 @@
       :headers="headers"
       :items="oltportlist"
       :search="search"
-      :expanded.sync="expanded"
-      single-expand
       item-key="portId"
       class="elevation-1"
-      show-expand
-      :loading="loading"
     >
-      <template v-slot:item.status="{ item }">
-        <v-chip color="red" dark v-if="item.ONTs.length == 0">no ONT</v-chip>
+      <template v-slot:item.count="{ item }">
+        <v-chip color="yellow" dark v-if="item.ONTs.length == 0">no ONT</v-chip>
         <v-chip color="green" dark v-else>{{item.ONTs.length}} ONTs</v-chip>
       </template>
       <template v-slot:expanded-item="{headers,item}">
@@ -29,10 +25,10 @@
             </v-simple-table>
         </td>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <!-- <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template>
+      </template> -->
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-toolbar-title class="font-weight-bold">ONTs</v-toolbar-title>
@@ -48,7 +44,7 @@
             dense
             class="px-6 mx-6"
           ></v-text-field>
-          <v-dialog v-model="dialog" max-width="500px">
+          <!-- <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-1" v-bind="attrs" v-on="on">New Item</v-btn>
             </template>
@@ -85,13 +81,13 @@
                 <v-btn color="blue darken-1" text @click="save">Save</v-btn>
               </v-card-actions>
             </v-card>
-          </v-dialog>
+          </v-dialog> -->
         </v-toolbar>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <!-- <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template>
+      </template> -->
     </v-data-table>
   </v-card>
   </div>
@@ -110,14 +106,14 @@ export default {
           align: "start",
           value: "portId"
         },
-        { text: "", value: "status", sortable: false },
-        { text: "Action", value: "actions", sortable: false },
-        { text: "", value: "data-table-expand" }
+        { text: "ONT Count", value: "count", sortable: false },
+        { text: "Status", value: "status"},
+        // { text: "Action", value: "actions", sortable: false },
+        // { text: "", value: "data-table-expand" }
       ],
       editedIndex: -1,
       editedItem: {},
       defaultItem: {},
-      loading:true,
     };
   },
   computed: {
@@ -136,13 +132,6 @@ export default {
     dialog(val) {
       val || this.close();
     },
-    oltportlist(value){
-        if(value == undefined){
-            this.loading = true;
-        }else{
-            this.loading = false;
-        }
-    }
   },
   methods: {
     editItem(item) {
