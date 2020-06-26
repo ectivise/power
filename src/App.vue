@@ -108,7 +108,7 @@ export default {
         text: "Dashboard"
       },
       {
-        icon: "mdi-router-network",
+        icon: "mdi-router-wireless-settings",
         text: "GPON",
         to: "/summary"
       },
