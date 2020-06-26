@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="6" md="4" offset-md="2">
+      <v-col cols="12" md="4" offset-md="2">
         <v-card @click.prevent="oltdetail(oltlist[0].device.name)">
           <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
@@ -17,7 +17,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="6" md="4">
+      <v-col cols="12" md="4">
         <v-card @click.prevent="oltdetail(oltlist[1].device.name)">
             <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
