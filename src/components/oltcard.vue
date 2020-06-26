@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="6" md="4" offset-md="2">
-        <v-card>
+        <v-card @click.prevent="oltdetail(oltlist[0].device.name)">
           <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
             {{oltlist[0].device.name}}<v-chip :color="getColor(oltlist[0].device.redundant)" class="ma-2" dark small>{{oltlist[0].device.redundant }}</v-chip>
@@ -18,7 +18,7 @@
         </v-card>
       </v-col>
       <v-col cols="6" md="4">
-        <v-card>
+        <v-card @click.prevent="oltdetail(oltlist[1].device.name)">
             <v-card-title>
             <v-icon left>mdi-router-network</v-icon>
             {{oltlist[1].device.name}}<v-chip :color="getColor(oltlist[1].device.redundant)" class="ma-2" dark small>{{oltlist[1].device.redundant }}</v-chip>
@@ -74,6 +74,10 @@ export default {
       }
       return ontcount;
     },
+    oltdetail(oltname){
+      let url = "/olt_detail/"+ oltname;
+      this.$router.push(url);
+    }
   }
 };
 </script>

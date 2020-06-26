@@ -109,7 +109,7 @@ export default {
       },
       {
         icon: "mdi-router-network",
-        text: "Summary",
+        text: "GPON",
         to: "/summary"
       },
       {

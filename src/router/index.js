@@ -27,6 +27,14 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/OLT.vue')
   },
   {
+    path: '/olt_detail/:olt_name',
+    name: 'OLT_Detail',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/OLT_detail.vue')
+  },
+  {
     path: '/ont',
     name: 'ONT',
     // route level code-splitting

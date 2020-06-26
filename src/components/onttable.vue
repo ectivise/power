@@ -11,7 +11,7 @@
             single-expand
             item-key="_id"
             class="elevation-1"
-            :mobile-breakpoint='NaN'
+            :mobile-breakpoint="null"
           >
             <template v-slot:item="{item}">
               <tr @click="handlerow(item)" class="text-left">
