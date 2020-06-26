@@ -12,6 +12,9 @@
         <v-chip color="yellow" dark v-if="item.ONTs.length == 0">no ONT</v-chip>
         <v-chip color="green" dark v-else>{{item.ONTs.length}} ONTs</v-chip>
       </template>
+      <template v-slot:item.status="{ item }">
+        <v-chip color="green" dark>Normal {{item.ONTs.length}}</v-chip>
+      </template>
       <template v-slot:expanded-item="{headers,item}">
         <td :colspan="headers.length">
           <v-simple-table>
