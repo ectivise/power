@@ -103,7 +103,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="6">
         <v-card>
           <v-card-title>Top 5 Power <v-icon>mdi-lightning-bolt</v-icon> </v-card-title>
           <v-card-text>
@@ -131,14 +131,14 @@
           </v-card-actions>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col  cols="12" md="6">
         <v-card>
           <v-card-title><v-icon left>mdi-alert</v-icon>Alarms</v-card-title>
         </v-card>
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
+      <v-col cols="12" md="12">
         <v-card>
           <v-card-title>Events</v-card-title>
         </v-card>
