@@ -9,8 +9,7 @@
       class="elevation-1"
     >
       <template v-slot:item.count="{ item }">
-        <v-chip color="yellow" dark v-if="item.ONTs.length == 0">no ONT</v-chip>
-        <v-chip color="green" dark v-else>{{item.ONTs.length}} ONTs</v-chip>
+        {{item.ONTs.length}}
       </template>
       <template v-slot:item.status="{ item }">
         <v-chip color="green" dark>Normal {{item.ONTs.length}}</v-chip>
