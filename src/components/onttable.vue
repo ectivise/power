@@ -178,6 +178,8 @@
           <v-divider class="mb-3"></v-divider>
           <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart><br>
           <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3"></line-chart><br>
+          <h3>Gausian</h3>
+            <line-chart :data="bellcurvedata" xtitle="Power" ytitle="Frequency" class="mt-3"></line-chart>
           <p>
             Cost: $120<br>
           </p>
@@ -207,6 +209,17 @@ export default {
         "16/6": 3,
         "17/6": 3.5,
         "18/6": 3
+      },
+      bellcurvedata: {
+        "20":  1,
+        "30":  2,
+        "40":  4,
+        "50":  7,
+        "60":  11,
+        "70":  7,
+        "80":  4,
+        "90":  2,
+        "100":  1,
       },
       ontexpanded: [],
       // dialog: false,
