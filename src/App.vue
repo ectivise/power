@@ -189,6 +189,7 @@ export default {
     async logout() {
       // await this.$store.dispatch("logout",this.$store.getters.currentuser.mobile);
       this.$store.commit("logout");
+      this.drawer = false;
       this.loginstatus();
       this.tologin();
     },
