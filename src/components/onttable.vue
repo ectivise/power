@@ -319,19 +319,19 @@ export default {
           sumTX += ontopticdata[i].tx
         }
         meanTX = sumTX/ontopticdata.length
-        console.log(meanTX)
+        // console.log(meanTX)
         // SD
         for(let i=0; i<ontopticdata.length; i++){
           summationTX += Math.pow((ontopticdata[i].tx - meanTX),2)
         }
         var SDTX = Math.sqrt(summationTX/ontopticdata.length)
-        console.log(SDTX)
+        // console.log(SDTX)
         // labels
         for(let i=0; i<ontopticdata.length; i++){
             labels.push(ontopticdata[i].tx)
         }
         labels.sort(function(a, b){return a-b});
-        console.log(labels)
+        // console.log(labels)
         // normalize
         for(let i=0; i<labels.length; i++){
           normalizeTX.push(this.gaussfunction(labels[i],meanTX,SDTX))
@@ -344,7 +344,7 @@ export default {
           point.push(normalizeTX[i]);
           array.push(point)
         }
-        console.log(array)
+        // console.log(array)
         return array
       }
     },
