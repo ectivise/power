@@ -211,8 +211,12 @@ export default {
         "18/6": 3
       },
       // bellcurvedata: [
-      //   [10, 1], 
-      //   [20, 2]
+      //   { name: 'line one',
+      //     data:[[10, 1],[20, 2]]
+      //   },
+      //   { name: 'line two',
+      //     data:[[20, 1],[30, 2]]
+      //   },
       // ],
       ontexpanded: [],
       // dialog: false,
@@ -304,16 +308,29 @@ export default {
     // },
     bellcurvedata(){
       var ontopticdata = this.$store.getters.ont_opticdata;
-
+      
       if (ontopticdata == undefined) {
         return {};
       } else {
-        var array = []
+        var dataset = [
+        { 
+          name: 'Optical TX',
+          data:[]
+        },
+        { 
+          name: 'Optical RX',
+          data:[]
+        },
+      ]
+
+
+        // TX
+        var arrayTX = []
         var sumTX = 0
         var meanTX = 0
         var summationTX = 0
         var normalizeTX = []
-        var labels = []
+        var labelsTX = []
         // mean
         for(let i=0; i<ontopticdata.length; i++){
           sumTX += ontopticdata[i].tx
@@ -328,24 +345,69 @@ export default {
         // console.log(SDTX)
         // labels
         for(let i=0; i<ontopticdata.length; i++){
-            labels.push(ontopticdata[i].tx)
+            labelsTX.push(ontopticdata[i].tx)
         }
-        labels.sort(function(a, b){return a-b});
-        // console.log(labels)
+        labelsTX.sort(function(a, b){return a-b});
+        // console.log(labelsTX)
         // normalize
-        for(let i=0; i<labels.length; i++){
-          normalizeTX.push(this.gaussfunction(labels[i],meanTX,SDTX))
+        for(let i=0; i<labelsTX.length; i++){
+          normalizeTX.push(this.gaussfunction(labelsTX[i],meanTX,SDTX))
         }
         
         // bellcurve data
-        for(let i=0; i<labels.length; i++){
-          var point=[];
-          point.push(labels[i]);
+        for(let i=0; i<labelsTX.length; i++){
+          let point=[];
+          point.push(labelsTX[i]);
           point.push(normalizeTX[i]);
-          array.push(point)
+          arrayTX.push(point)
         }
-        // console.log(array)
-        return array
+        // console.log(arrayTX)
+        
+        dataset[0].data = arrayTX
+
+        // RX
+        var arrayRX = []
+        var sumRX = 0
+        var meanRX = 0
+        var summationRX = 0
+        var normalizeRX = []
+        var labelsRX = []
+        // mean
+        for(let i=0; i<ontopticdata.length; i++){
+          sumRX += ontopticdata[i].rx
+        }
+        meanRX = sumRX/ontopticdata.length
+        console.log(meanRX)
+        // SD
+        for(let i=0; i<ontopticdata.length; i++){
+          summationRX += Math.pow((ontopticdata[i].rx - meanRX),2)
+        }
+        var SDRX = Math.sqrt(summationRX/ontopticdata.length)
+        console.log(SDRX)
+        // labels
+        for(let i=0; i<ontopticdata.length; i++){
+            labelsRX.push(ontopticdata[i].rx)
+        }
+        labelsRX.sort(function(a, b){return a-b});
+        console.log(labelsRX)
+
+        // normalize
+        for(let i=0; i<labelsRX.length; i++){
+          normalizeRX.push(this.gaussfunction(labelsRX[i],meanRX,SDRX))
+        }
+
+        console.log(normalizeRX)
+        // bellcurve data
+        for(let i=0; i<labelsRX.length; i++){
+          let point=[];
+          point.push(labelsRX[i]);
+          point.push(normalizeRX[i]);
+          arrayRX.push(point)
+        }
+        // console.log(arrayRX)
+        dataset[1].data = arrayRX
+
+        return dataset
       }
     },
   },
