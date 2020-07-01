@@ -178,8 +178,8 @@
           <v-divider class="mb-3"></v-divider>
           <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart><br>
           <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3"></line-chart><br>
-          <h3>Gausian</h3>
-            <line-chart :data="bellcurvedata" xtitle="Power" ytitle="Frequency" class="mt-3"></line-chart>
+          <h3>Optical Power Gausian</h3>
+            <line-chart :data="bellcurvedata" xtitle="Power" ytitle="Probability" class="mt-3"></line-chart>
           <p>
             Cost: $120<br>
           </p>
@@ -210,17 +210,10 @@ export default {
         "17/6": 3.5,
         "18/6": 3
       },
-      bellcurvedata: {
-        "20":  1,
-        "30":  2,
-        "40":  4,
-        "50":  7,
-        "60":  11,
-        "70":  7,
-        "80":  4,
-        "90":  2,
-        "100":  1,
-      },
+      // bellcurvedata: [
+      //   [10, 1], 
+      //   [20, 2]
+      // ],
       ontexpanded: [],
       // dialog: false,
       ontsearch: "",
@@ -301,25 +294,84 @@ export default {
       } else {
         return this.$store.getters.oltlist;
       }
-    }
+    },
+    // ontopticdata() {
+    //   if (this.$store.getters.ont_opticdata == {}) {
+    //     return {};
+    //   } else {
+    //     return this.$store.getters.ont_opticdata;
+    //   }
+    // },
+    bellcurvedata(){
+      var ontopticdata = this.$store.getters.ont_opticdata;
+
+      if (ontopticdata == undefined) {
+        return {};
+      } else {
+        var array = []
+        var sumTX = 0
+        var meanTX = 0
+        var summationTX = 0
+        var normalizeTX = []
+        var labels = []
+        // mean
+        for(let i=0; i<ontopticdata.length; i++){
+          sumTX += ontopticdata[i].tx
+        }
+        meanTX = sumTX/ontopticdata.length
+        console.log(meanTX)
+        // SD
+        for(let i=0; i<ontopticdata.length; i++){
+          summationTX += Math.pow((ontopticdata[i].tx - meanTX),2)
+        }
+        var SDTX = Math.sqrt(summationTX/ontopticdata.length)
+        console.log(SDTX)
+        // labels
+        for(let i=0; i<ontopticdata.length; i++){
+            labels.push(ontopticdata[i].tx)
+        }
+        labels.sort(function(a, b){return a-b});
+        console.log(labels)
+        // normalize
+        for(let i=0; i<labels.length; i++){
+          normalizeTX.push(this.gaussfunction(labels[i],meanTX,SDTX))
+        }
+        
+        // bellcurve data
+        for(let i=0; i<labels.length; i++){
+          var point=[];
+          point.push(labels[i]);
+          point.push(normalizeTX[i]);
+          array.push(point)
+        }
+        console.log(array)
+        return array
+      }
+    },
   },
-  watch: {
-    dialog(val) {
-      val || this.close();
-    }
-  },
+  // watch: {
+  //   dialog(val) {
+  //     val || this.close();
+  //   }
+  // },
 
   created() {
     this.get_ontlist();
   },
 
   methods: {
+    gaussfunction(x,m,sd){
+      var prob = 0 
+      prob = (1/(sd * Math.sqrt(2 * Math.PI))) * Math.exp(-(Math.pow((x-m),2))/(2*Math.pow(sd,2)))
+      return prob
+    },
     get_ontlist() {
       this.$store.dispatch("get_ontlist");
     },
 
     handlerow(item) {
       this.viewitem = item;
+      this.$store.dispatch("get_ont_opticdata",item.device.name);
       this.dialog = true;
     },
 

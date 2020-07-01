@@ -11,6 +11,7 @@ export default new Vuex.Store({
     oltlist: [],
     login:false,
     loginresult:{},
+    opticresult:{},
     snackbar:{},
   },
   mutations: {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     logout(state){
       state.login = false;
     },
+    ont_opticdata(state,result){
+      state.opticresult = result;
+    },
     set_snackbar(state, snackbar) {
       state.snackbar = snackbar;
     },
@@ -40,7 +44,27 @@ export default new Vuex.Store({
     setsnackbar(context, snackbar) {
       context.commit("set_snackbar", snackbar);
     },
+    async get_ont_opticdata(context,ontname){
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      myHeaders.append("Cookie", "connect.sid=s%3AX7x6Uu9x_ZsIQYGp9-cIxaqCegXOgrU9.LbbaIgHZhaKozMfeKYJL7d6SW9Vf9zDeaoy1BO2mBLU");
 
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("token", this.state.frontend_token);
+      urlencoded.append("name", ontname);
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+      };
+
+      await fetch(this.state.backend_api+"devices/get_opticHistory", requestOptions)
+        .then(response => response.text())
+        .then(result => context.commit("ont_opticdata", JSON.parse(result)))
+        .catch(error => console.log('error', error));
+    },
     async get_ontlist(context) {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -157,6 +181,9 @@ export default new Vuex.Store({
     },
     login(state) {
       return state.login;
+    },
+    ont_opticdata(state){
+      return state.opticresult.data;
     },
   },
   modules: {},
