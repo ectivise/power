@@ -52,10 +52,12 @@
       <v-container>
           <v-row>
               <v-col>
+                <h3>Optical RX against Time</h3>
                 <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart>
               </v-col>
               <v-col>
-                <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3"></line-chart>
+                <h3>Optical TX against Time</h3>
+                <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3" :colors="['#b00', '#666']"></line-chart>
               </v-col>
           </v-row>
           <v-row>
@@ -65,7 +67,7 @@
               </v-col>
               <v-col>
                   <h3>Optical TX Gausian</h3>
-                    <line-chart :data="bellcurvedataTX" xtitle="Power" ytitle="Probability" class="mt-3"></line-chart>
+                    <line-chart :data="bellcurvedataTX" xtitle="Power" ytitle="Probability" class="mt-3" :colors="['#b00', '#666']"></line-chart>
               </v-col>
           </v-row>
       </v-container>
