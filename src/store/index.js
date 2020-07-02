@@ -173,6 +173,15 @@ export default new Vuex.Store({
     ontlist(state) {
       return state.ontlist.data;
     },
+    // ont(state,ontname) {
+    //   var ontlist = state.ontlist.data;
+    //   ontlist = ontlist.filter(ont => ont.device.name == ontname);
+
+    //   return ontlist[0]
+    // },
+    ont:(state) => (ontname) => {
+      return state.ontlist.data.find(ont => ont.device.name === ontname)
+    },
     oltlist(state){
       return state.oltlist.data;
     },

@@ -14,7 +14,7 @@
             :mobile-breakpoint="null"
           >
             <template v-slot:item="{item}">
-              <tr @click="handlerow(item)" class="text-left">
+              <tr @click="ontdetail(item)" class="text-left">
                 <td><v-chip :color="getColor(item.device.redundant)" dark class="caption" small></v-chip> {{item.device.name}}</td>
                 <td>{{item.device_id}}</td>
                 <td>{{item.OLTport}}</td>
@@ -140,7 +140,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="dialog" presistent :width="$vuetify.breakpoint.mobile ? '' : '70vw'">
+    <!-- <v-dialog v-model="dialog" presistent :width="$vuetify.breakpoint.mobile ? '' : '70vw'">
       <v-card>
         <v-card-title>{{this.viewitem.device.name}}</v-card-title>
         <v-card-text class="text-left">
@@ -173,7 +173,7 @@
             Optical RX: {{this.viewitem.optical.rx}}<br />
             Optical TX: {{this.viewitem.optical.tx}}<br />
             Distance: {{this.viewitem.optical.distance}}m<br />
-            <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
+            Time Stamp: {{this.viewitem.optical.timestamp}}<br />
           </p>
           <v-divider class="mb-3"></v-divider>
           <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart><br>
@@ -189,7 +189,7 @@
           <v-btn @click="dialog=false" color="primary">Close</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 
@@ -198,18 +198,18 @@ export default {
   name: "onttable",
   data() {
     return {
-      rxdata: {
-        "15/6": 3,
-        "16/6": 3,
-        "17/6": 3.5,
-        "18/6": 3
-      },
-      txdata: {
-        "15/6": 3,
-        "16/6": 3,
-        "17/6": 3.5,
-        "18/6": 3
-      },
+      // rxdata: {
+      //   "15/6": 3,
+      //   "16/6": 3,
+      //   "17/6": 3.5,
+      //   "18/6": 3
+      // },
+      // txdata: {
+      //   "15/6": 3,
+      //   "16/6": 3,
+      //   "17/6": 3.5,
+      //   "18/6": 3
+      // },
       // bellcurvedata: [
       //   { name: 'line one',
       //     data:[[10, 1],[20, 2]]
@@ -242,47 +242,47 @@ export default {
       editedItem: {},
       defaultItem: {},
       dialog: false,
-      viewitem: {
-        optical: {
-          rx: 0,
-          tx: 0,
-          timestamp: 0
-        },
-        distance: 0,
-        device: {
-          health: {
-            temperature: 0,
-            cpu: 0,
-            mem: 0,
-            hdd: 0,
-            bandwidth: 0
-          },
-          power: {
-            power6h: "",
-            power24h: "",
-            power1w: "",
-            power1m: "",
-            power1y: "",
-            power: 0,
-            voltage: 0,
-            current: 0
-          },
-          name: "",
-          IP_Address: "",
-          type: "",
-          category: "",
-          lastdowncause: "",
-          redundant: "",
-          lastDownTime: "",
-          lastUpTime: "",
-          SN: "",
-          model: ""
-        },
-        OLTname: "",
-        OLTport: "",
-        subsystemPorts: [],
-        __v: 0
-      }
+      // viewitem: {
+      //   optical: {
+      //     rx: 0,
+      //     tx: 0,
+      //     timestamp: 0
+      //   },
+      //   distance: 0,
+      //   device: {
+      //     health: {
+      //       temperature: 0,
+      //       cpu: 0,
+      //       mem: 0,
+      //       hdd: 0,
+      //       bandwidth: 0
+      //     },
+      //     power: {
+      //       power6h: "",
+      //       power24h: "",
+      //       power1w: "",
+      //       power1m: "",
+      //       power1y: "",
+      //       power: 0,
+      //       voltage: 0,
+      //       current: 0
+      //     },
+      //     name: "",
+      //     IP_Address: "",
+      //     type: "",
+      //     category: "",
+      //     lastdowncause: "",
+      //     redundant: "",
+      //     lastDownTime: "",
+      //     lastUpTime: "",
+      //     SN: "",
+      //     model: ""
+      //   },
+      //   OLTname: "",
+      //   OLTport: "",
+      //   subsystemPorts: [],
+      //   __v: 0
+      // }
     };
   },
   computed: {
@@ -306,110 +306,7 @@ export default {
     //     return this.$store.getters.ont_opticdata;
     //   }
     // },
-    bellcurvedata(){
-      var ontopticdata = this.$store.getters.ont_opticdata;
-      
-      if (ontopticdata == undefined) {
-        return {};
-      } else {
-        var dataset = [
-        { 
-          name: 'Optical TX',
-          data:[]
-        },
-        { 
-          name: 'Optical RX',
-          data:[]
-        },
-      ]
-
-
-        // TX
-        var arrayTX = []
-        var sumTX = 0
-        var meanTX = 0
-        var summationTX = 0
-        var normalizeTX = []
-        var labelsTX = []
-        // mean
-        for(let i=0; i<ontopticdata.length; i++){
-          sumTX += ontopticdata[i].tx
-        }
-        meanTX = sumTX/ontopticdata.length
-        // console.log(meanTX)
-        // SD
-        for(let i=0; i<ontopticdata.length; i++){
-          summationTX += Math.pow((ontopticdata[i].tx - meanTX),2)
-        }
-        var SDTX = Math.sqrt(summationTX/ontopticdata.length)
-        // console.log(SDTX)
-        // labels
-        for(let i=0; i<ontopticdata.length; i++){
-            labelsTX.push(ontopticdata[i].tx)
-        }
-        labelsTX.sort(function(a, b){return a-b});
-        // console.log(labelsTX)
-        // normalize
-        for(let i=0; i<labelsTX.length; i++){
-          normalizeTX.push(this.gaussfunction(labelsTX[i],meanTX,SDTX))
-        }
-        
-        // bellcurve data
-        for(let i=0; i<labelsTX.length; i++){
-          let point=[];
-          point.push(labelsTX[i]);
-          point.push(normalizeTX[i]);
-          arrayTX.push(point)
-        }
-        // console.log(arrayTX)
-        
-        dataset[0].data = arrayTX
-
-        // RX
-        var arrayRX = []
-        var sumRX = 0
-        var meanRX = 0
-        var summationRX = 0
-        var normalizeRX = []
-        var labelsRX = []
-        // mean
-        for(let i=0; i<ontopticdata.length; i++){
-          sumRX += ontopticdata[i].rx
-        }
-        meanRX = sumRX/ontopticdata.length
-        console.log(meanRX)
-        // SD
-        for(let i=0; i<ontopticdata.length; i++){
-          summationRX += Math.pow((ontopticdata[i].rx - meanRX),2)
-        }
-        var SDRX = Math.sqrt(summationRX/ontopticdata.length)
-        console.log(SDRX)
-        // labels
-        for(let i=0; i<ontopticdata.length; i++){
-            labelsRX.push(ontopticdata[i].rx)
-        }
-        labelsRX.sort(function(a, b){return a-b});
-        console.log(labelsRX)
-
-        // normalize
-        for(let i=0; i<labelsRX.length; i++){
-          normalizeRX.push(this.gaussfunction(labelsRX[i],meanRX,SDRX))
-        }
-
-        console.log(normalizeRX)
-        // bellcurve data
-        for(let i=0; i<labelsRX.length; i++){
-          let point=[];
-          point.push(labelsRX[i]);
-          point.push(normalizeRX[i]);
-          arrayRX.push(point)
-        }
-        // console.log(arrayRX)
-        dataset[1].data = arrayRX
-
-        return dataset
-      }
-    },
+    
   },
   // watch: {
   //   dialog(val) {
@@ -422,59 +319,61 @@ export default {
   },
 
   methods: {
-    gaussfunction(x,m,sd){
-      var prob = 0 
-      prob = (1/(sd * Math.sqrt(2 * Math.PI))) * Math.exp(-(Math.pow((x-m),2))/(2*Math.pow(sd,2)))
-      return prob
-    },
     get_ontlist() {
       this.$store.dispatch("get_ontlist");
     },
 
-    handlerow(item) {
+    ontdetail(item){
       this.viewitem = item;
       this.$store.dispatch("get_ont_opticdata",item.device.name);
-      this.dialog = true;
+      let url = "/ont_detail/"+ item.device.name;
+      this.$router.push(url);
     },
 
-    editItem(item) {
-      this.editedIndex = this.raspberrypis.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
+    // handlerow(item) {
+    //   this.viewitem = item;
+    //   this.$store.dispatch("get_ont_opticdata",item.device.name);
+    //   this.dialog = true;
+    // },
 
-    deleteItem(item) {
-      const index = this.ontlist.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.ontlist.splice(index, 1);
-    },
+    // editItem(item) {
+    //   this.editedIndex = this.raspberrypis.indexOf(item);
+    //   this.editedItem = Object.assign({}, item);
+    //   this.dialog = true;
+    // },
 
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
-    },
+    // deleteItem(item) {
+    //   const index = this.ontlist.indexOf(item);
+    //   confirm("Are you sure you want to delete this item?") &&
+    //     this.ontlist.splice(index, 1);
+    // },
 
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.raspberrypis[this.editedIndex], this.editedItem);
-      } else {
-        this.raspberrypis.push(this.editedItem);
-      }
-      this.close();
-    },
+    // close() {
+    //   this.dialog = false;
+    //   this.$nextTick(() => {
+    //     this.editedItem = Object.assign({}, this.defaultItem);
+    //     this.editedIndex = -1;
+    //   });
+    // },
 
-    getportont(ontname) {
-      for (let i = 0; i < this.oltlist[0].ports.length; i++) {
-        for (let j = 0; j < this.oltlist[0].ports[i].ONTs.length; j++) {
-          if (this.oltlist[0].ports[i].ONTs[j] == ontname) {
-            return this.oltlist[0].ports[i].portId;
-          }
-        }
-      }
-    },
+    // save() {
+    //   if (this.editedIndex > -1) {
+    //     Object.assign(this.raspberrypis[this.editedIndex], this.editedItem);
+    //   } else {
+    //     this.raspberrypis.push(this.editedItem);
+    //   }
+    //   this.close();
+    // },
+
+    // getportont(ontname) {
+    //   for (let i = 0; i < this.oltlist[0].ports.length; i++) {
+    //     for (let j = 0; j < this.oltlist[0].ports[i].ONTs.length; j++) {
+    //       if (this.oltlist[0].ports[i].ONTs[j] == ontname) {
+    //         return this.oltlist[0].ports[i].portId;
+    //       }
+    //     }
+    //   }
+    // },
     getColor(status) {
       switch (status) {
         case "Active":
@@ -482,7 +381,8 @@ export default {
         case "Standby":
           return "orange";
       }
-    }
+    },
+    
   }
 };
 </script>
