@@ -75,7 +75,7 @@
 
         <v-app-bar app color="green" dark hide-on-scroll>
           <v-app-bar-nav-icon v-if="$vuetify.breakpoint.name == 'xs' ||  $vuetify.breakpoint.name == 'sm'" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title>Power Moniter build.v1</v-toolbar-title>
+          <v-toolbar-title>Power Moniter <small>build.v02072020.1</small> </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn v-if="login" @click="logout()" dark color="primary">Log Out</v-btn>
         </v-app-bar>
