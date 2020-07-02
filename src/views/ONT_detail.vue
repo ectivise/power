@@ -50,7 +50,7 @@
       </p>
       <v-divider class="mb-3"></v-divider>
       <v-container>
-          <v-row>
+          <!-- <v-row>
               <v-col>
                 <h3>Optical RX against Time</h3>
                 <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart>
@@ -59,7 +59,7 @@
                 <h3>Optical TX against Time</h3>
                 <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3" :colors="['#b00', '#666']"></line-chart>
               </v-col>
-          </v-row>
+          </v-row> -->
           <v-row>
               <v-col>
                 <h3>Optical RX Gausian</h3>
