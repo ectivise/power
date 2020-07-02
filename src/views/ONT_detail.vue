@@ -49,12 +49,28 @@
         <!-- Time Stamp: {{this.viewitem.optical.timestamp}}<br /> -->
       </p>
       <v-divider class="mb-3"></v-divider>
-      <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart>
-      <br />
-      <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3"></line-chart>
-      <br />
-      <h3>Optical Power Gausian</h3>
-      <line-chart :data="bellcurvedata" xtitle="Power" ytitle="Probability" class="mt-3"></line-chart>
+      <v-container>
+          <v-row>
+              <v-col>
+                <line-chart :data="rxdata" xtitle="Date" ytitle="Optical RX" :curve="false" class="mt-3"></line-chart>
+              </v-col>
+              <v-col>
+                <line-chart :data="txdata" xtitle="Date" ytitle="Optical TX" :curve="false" class="mt-3"></line-chart>
+              </v-col>
+          </v-row>
+          <v-row>
+              <v-col>
+                <h3>Optical RX Gausian</h3>
+                    <line-chart :data="bellcurvedataRX" xtitle="Power" ytitle="Probability" class="mt-3"></line-chart>
+              </v-col>
+              <v-col>
+                  <h3>Optical TX Gausian</h3>
+                    <line-chart :data="bellcurvedataTX" xtitle="Power" ytitle="Probability" class="mt-3"></line-chart>
+              </v-col>
+          </v-row>
+      </v-container>
+    
+      
       <p>
         Cost: $120
         <br />
@@ -124,22 +140,22 @@ export default {
     };
   },
   computed:{
-      bellcurvedata(){
+      bellcurvedataTX(){
       var ontopticdata = this.$store.getters.ont_opticdata;
       
       if (ontopticdata == undefined) {
         return {};
       } else {
-        var dataset = [
-        { 
-          name: 'Optical TX',
-          data:[]
-        },
-        { 
-          name: 'Optical RX',
-          data:[]
-        },
-      ]
+    //     var dataset = [
+    //     { 
+    //       name: 'Optical TX',
+    //       data:[]
+    //     },
+    //     { 
+    //       name: 'Optical RX',
+    //       data:[]
+    //     },
+    //   ]
 
 
         // TX
@@ -180,10 +196,18 @@ export default {
           arrayTX.push(point)
         }
         // console.log(arrayTX)
-        
-        dataset[0].data = arrayTX
+        return arrayTX
+        // dataset[0].data = arrayTX
+      }
 
-        // RX
+      },
+    bellcurvedataRX(){
+    var ontopticdata = this.$store.getters.ont_opticdata;
+      
+      if (ontopticdata == undefined) {
+        return {};
+      } else {
+          // RX
         var arrayRX = []
         var sumRX = 0
         var meanRX = 0
@@ -223,13 +247,12 @@ export default {
           arrayRX.push(point)
         }
         // console.log(arrayRX)
-        dataset[1].data = arrayRX
+        // dataset[1].data = arrayRX
 
-        return dataset
+        return arrayRX
       }
     },
   },
-
   created() {
     this.getontdetail(this.$route.params.ont_name);
   },
@@ -245,8 +268,5 @@ export default {
       return prob;
     }
   }
-};
+}
 </script>
-
-<style>
-</style>
